@@ -10,7 +10,7 @@ namespace BooksCatalog.Infra
         private readonly DbContext _context;
         protected readonly DbSet<T> EntitySet;
 
-        public BaseRepository(DbContext context)
+        protected BaseRepository(DbContext context)
         {
             _context = context;
             EntitySet = _context.Set<T>();
@@ -20,10 +20,10 @@ namespace BooksCatalog.Infra
             await EntitySet.AddAsync(entity);
 
         public async Task<IEnumerable<T>> GetAllAsync(T entity) =>
-            await EntitySet.ToListAsync();
+            await EntitySet.AsNoTracking().ToListAsync();
 
         public async Task<T> FindByIdAsync(int id) =>
-            await EntitySet.FindAsync(id);
+            await EntitySet.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
 
         public Task UpdateAsync(T entity)
         {
