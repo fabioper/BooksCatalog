@@ -1,4 +1,4 @@
-﻿namespace BooksCatalog.Domain
+﻿namespace BooksCatalog.Core.Common
 {
     public abstract class Entity
     {

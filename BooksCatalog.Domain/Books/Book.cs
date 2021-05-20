@@ -1,6 +1,7 @@
 ﻿using System;
+using BooksCatalog.Core.Common;
 
-namespace BooksCatalog.Domain.Books
+namespace BooksCatalog.Core.Books
 {
     public class Book : Entity
     {

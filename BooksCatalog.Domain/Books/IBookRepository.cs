@@ -1,6 +1,6 @@
-﻿using BooksCatalog.Domain.Interfaces;
+﻿using BooksCatalog.Core.Common;
 
-namespace BooksCatalog.Domain.Books
+namespace BooksCatalog.Core.Books
 {
     public interface IBookRepository : IRepository<Book>
     {
