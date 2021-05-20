@@ -1,5 +1,4 @@
-﻿using BooksCatalog.Domain;
-using BooksCatalog.Domain.Books;
+﻿using BooksCatalog.Core.Books;
 using Microsoft.EntityFrameworkCore;
 
 namespace BooksCatalog.Infra

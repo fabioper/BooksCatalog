@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using BooksCatalog.Domain;
-using BooksCatalog.Domain.Interfaces;
+using BooksCatalog.Core.Common;
 using Microsoft.EntityFrameworkCore;
 
 namespace BooksCatalog.Infra
 {
     public class BaseRepository<T> : IRepository<T> where T : Entity
     {
-        private DbContext _context;
+        private readonly DbContext _context;
         protected readonly DbSet<T> EntitySet;
 
         public BaseRepository(DbContext context)
