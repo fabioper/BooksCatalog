@@ -4,4 +4,8 @@
         <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\BooksCatalog.Shared\BooksCatalog.Shared.csproj" />
+    </ItemGroup>
+
 </Project>
