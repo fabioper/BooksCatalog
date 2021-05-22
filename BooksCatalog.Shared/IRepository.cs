@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BooksCatalog.Core.Common
+namespace BooksCatalog.Shared
 {
     public interface IRepository<T> where T : Entity
     {
