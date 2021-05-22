@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BooksCatalog.Shared;
 using Microsoft.EntityFrameworkCore;
 
-namespace BooksCatalog.Infra
+namespace BooksCatalog.Infra.Data.Repositories
 {
     public class BaseRepository<T> : IRepository<T> where T : Entity
     {
@@ -20,11 +21,18 @@ namespace BooksCatalog.Infra
         public async Task AddAsync(T entity) =>
             await _entitySet.AddAsync(entity);
 
-        public async Task<IEnumerable<T>> GetAllAsync(T entity) =>
+        public async Task<IEnumerable<T>> GetAllAsync() =>
             await _entitySet.AsNoTracking().ToListAsync();
 
         public async Task<T> FindByIdAsync(int id) =>
             await _entitySet.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+
+        public Task<List<T>> GetBySpec(Specification<T> spec)
+        {
+            return _entitySet.AsNoTracking()
+                .Where(spec.ToExpression())
+                .ToListAsync();
+        }
 
         public Task UpdateAsync(T entity)
         {

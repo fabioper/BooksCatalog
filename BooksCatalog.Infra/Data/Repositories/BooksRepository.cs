@@ -2,7 +2,7 @@
 using BooksCatalog.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace BooksCatalog.Infra
+namespace BooksCatalog.Infra.Data.Repositories
 {
     public class BooksRepository : BaseRepository<Book>, IBookRepository
     {

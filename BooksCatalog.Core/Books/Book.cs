@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using BooksCatalog.Core.Authors;
-using BooksCatalog.Core.Books.Guards;
 using BooksCatalog.Core.Genres;
 using BooksCatalog.Core.Publishers;
 using BooksCatalog.Shared;
@@ -26,7 +25,7 @@ namespace BooksCatalog.Core.Books
             Guard.Against.NullOrEmpty(title, nameof(title));
             Guard.Against.NullOrEmpty(description, nameof(description));
             Guard.Against.NullOrEmpty(isbn, nameof(isbn));
-            Guard.Against.InvalidIsbn(isbn);
+            /*Guard.Against.InvalidIsbn(isbn);*/
 
             Title = title;
             ReleaseDate = releaseDate;

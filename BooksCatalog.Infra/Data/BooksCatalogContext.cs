@@ -1,7 +1,8 @@
 ﻿using BooksCatalog.Core.Books;
+using BooksCatalog.Infra.Data.Configurations;
 using Microsoft.EntityFrameworkCore;
 
-namespace BooksCatalog.Infra
+namespace BooksCatalog.Infra.Data
 {
     public class BooksCatalogContext : DbContext
     {
