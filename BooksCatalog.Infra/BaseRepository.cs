@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using BooksCatalog.Core.Common;
+using BooksCatalog.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace BooksCatalog.Infra
@@ -8,31 +9,31 @@ namespace BooksCatalog.Infra
     public class BaseRepository<T> : IRepository<T> where T : Entity
     {
         private readonly DbContext _context;
-        protected readonly DbSet<T> EntitySet;
+        private readonly DbSet<T> _entitySet;
 
         protected BaseRepository(DbContext context)
         {
             _context = context;
-            EntitySet = _context.Set<T>();
+            _entitySet = _context.Set<T>();
         }
 
         public async Task AddAsync(T entity) =>
-            await EntitySet.AddAsync(entity);
+            await _entitySet.AddAsync(entity);
 
         public async Task<IEnumerable<T>> GetAllAsync(T entity) =>
-            await EntitySet.AsNoTracking().ToListAsync();
+            await _entitySet.AsNoTracking().ToListAsync();
 
         public async Task<T> FindByIdAsync(int id) =>
-            await EntitySet.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            await _entitySet.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
 
         public Task UpdateAsync(T entity)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public Task RemoveAsync(int id)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public async Task CommitChangesAsync() =>

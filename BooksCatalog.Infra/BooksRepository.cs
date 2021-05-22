@@ -1,4 +1,5 @@
 ﻿using BooksCatalog.Core.Books;
+using BooksCatalog.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace BooksCatalog.Infra
