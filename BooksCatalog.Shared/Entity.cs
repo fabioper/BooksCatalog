@@ -4,7 +4,10 @@
     {
         public int Id { get; set; }
 
-        private bool Equals(Entity other) => Id == other.Id;
+        private bool Equals(Entity other)
+        {
+            return Id == other.Id;
+        }
 
         public override bool Equals(object obj)
         {

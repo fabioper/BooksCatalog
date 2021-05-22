@@ -5,7 +5,16 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\BooksCatalog.Application\BooksCatalog.Application.csproj" />
+      <ProjectReference Include="..\BooksCatalog.Core\BooksCatalog.Core.csproj" />
+      <ProjectReference Include="..\BooksCatalog.Infra\BooksCatalog.Infra.csproj" />
       <ProjectReference Include="..\BooksCatalog.Shared\BooksCatalog.Shared.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="10.1.1" />
+      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.6" />
     </ItemGroup>
 
 </Project>

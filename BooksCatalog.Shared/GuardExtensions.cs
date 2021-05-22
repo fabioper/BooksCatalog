@@ -18,15 +18,15 @@ namespace BooksCatalog.Shared
         public static void NullOrEmpty(this IGuardClause clause, string input, string parameterName)
         {
             Guard.Against.Null(input, parameterName);
-            
+
             if (string.IsNullOrEmpty(input))
                 throw new ArgumentException(parameterName);
         }
-        
+
         public static void NullOrEmpty<T>(this IGuardClause clause, List<T> input, string parameterName)
         {
             Guard.Against.Null(input, parameterName);
-            
+
             if (!input.Any())
                 throw new ArgumentException(parameterName);
         }

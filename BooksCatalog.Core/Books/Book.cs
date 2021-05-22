@@ -10,15 +10,6 @@ namespace BooksCatalog.Core.Books
 {
     public class Book : Entity
     {
-        public string Title { get; private set; }
-        public DateTime ReleaseDate { get; private set; }
-        public string Description { get; private set; }
-        public string Isbn { get; private set; }
-
-        public ICollection<Author> Authors { get; private set; }
-        public ICollection<Genre> Genres { get; private set; }
-        public ICollection<Publisher> Publishers { get; private set; }
-
         public Book(string title, DateTime releaseDate, string description, string isbn, IEnumerable<Author> authors,
             IEnumerable<Genre> genres, IEnumerable<Publisher> publishers)
         {
@@ -35,5 +26,14 @@ namespace BooksCatalog.Core.Books
             Genres = genres.ToList();
             Publishers = publishers.ToList();
         }
+
+        public string Title { get; }
+        public DateTime ReleaseDate { get; }
+        public string Description { get; }
+        public string Isbn { get; }
+
+        public ICollection<Author> Authors { get; }
+        public ICollection<Genre> Genres { get; }
+        public ICollection<Publisher> Publishers { get; }
     }
 }

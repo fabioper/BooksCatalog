@@ -16,11 +16,11 @@ namespace BooksCatalog.Application
 {
     public class BooksService : IBooksService
     {
-        private readonly IBookRepository _bookRepository;
         private readonly IAuthorRepository _authorRepository;
+        private readonly IBookRepository _bookRepository;
         private readonly IGenreRepository _genreRepository;
-        private readonly IPublisherRepository _publisherRepository;
         private readonly IMapper _mapper;
+        private readonly IPublisherRepository _publisherRepository;
 
         public BooksService(IBookRepository bookRepository, IMapper mapper, IAuthorRepository authorRepository,
             IGenreRepository genreRepository, IPublisherRepository publisherRepository)
