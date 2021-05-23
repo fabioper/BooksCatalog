@@ -4,11 +4,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BooksCatalog.Infra.Data
 {
-    public class BooksCatalogContext : DbContext
+    public sealed class BooksCatalogContext : DbContext
     {
         public BooksCatalogContext(DbContextOptions<BooksCatalogContext> options)
             : base(options)
         {
+            Database.EnsureCreated();
         }
 
         public DbSet<Book> Books { get; set; }
