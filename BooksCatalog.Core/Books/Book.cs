@@ -30,7 +30,7 @@ namespace BooksCatalog.Core.Books
             Publishers = publishers;
         }
 
-        public Book()
+        public Book() // EF Core required
         {
         }
 
