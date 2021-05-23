@@ -1,10 +1,11 @@
-using AutoMapper;
 using BooksCatalog.Application;
 using BooksCatalog.Core.Interfaces;
 using BooksCatalog.Infra.Data;
 using BooksCatalog.Infra.Data.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -12,11 +13,19 @@ namespace BooksCatalog.Api
 {
     public class Startup
     {
+        private readonly IConfiguration _configuration;
+
+        public Startup(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
 
-            services.AddDbContext<BooksCatalogContext>();
+            services.AddDbContext<BooksCatalogContext>(options =>
+                options.UseSqlite(_configuration.GetConnectionString("DefaultConnection")));
             
             services.AddAutoMapper(typeof(Startup).Assembly);
 
