@@ -10,12 +10,15 @@ namespace BooksCatalog.Core.Books
 {
     public class Book : Entity
     {
-        public Book(string title, DateTime releaseDate, string description, string isbn, IEnumerable<Author> authors,
-            IEnumerable<Genre> genres, IEnumerable<Publisher> publishers)
+        public Book(string title, DateTime releaseDate, string description, string isbn, List<Author> authors,
+            List<Genre> genres, List<Publisher> publishers)
         {
             Guard.Against.NullOrEmpty(title, nameof(title));
             Guard.Against.NullOrEmpty(description, nameof(description));
             Guard.Against.NullOrEmpty(isbn, nameof(isbn));
+            Guard.Against.NullOrEmpty(authors, nameof(authors));
+            Guard.Against.NullOrEmpty(genres, nameof(genres));
+            Guard.Against.NullOrEmpty(publishers, nameof(publishers));
             /*Guard.Against.InvalidIsbn(isbn);*/
 
             Title = title;
@@ -25,6 +28,10 @@ namespace BooksCatalog.Core.Books
             Authors = authors.ToList();
             Genres = genres.ToList();
             Publishers = publishers.ToList();
+        }
+
+        public Book()
+        {
         }
 
         public string Title { get; }
