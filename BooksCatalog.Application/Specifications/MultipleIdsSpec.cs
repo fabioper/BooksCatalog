@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using BooksCatalog.Shared;
 
-namespace BooksCatalog.Application
+namespace BooksCatalog.Application.Specifications
 {
-    internal class MultipleIds<T> : Specification<T> where T : Entity
+    public class MultipleIdsSpec<T> : Specification<T> where T : Entity
     {
         private readonly List<int> _entityIds;
 
-        public MultipleIds(List<int> entityIds)
-        {
-            _entityIds = entityIds;
-        }
+        public MultipleIdsSpec(List<int> entityIds) => _entityIds = entityIds;
 
         public override Expression<Func<T, bool>> ToExpression()
         {

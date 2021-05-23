@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using BooksCatalog.Application.Interfaces;
+using BooksCatalog.Application.Specifications;
 using BooksCatalog.Core.Authors;
 using BooksCatalog.Core.Books;
 using BooksCatalog.Core.Genres;
@@ -12,7 +14,7 @@ using BooksCatalog.Shared;
 using BooksCatalog.Shared.Models.Requests;
 using BooksCatalog.Shared.Models.Responses;
 
-namespace BooksCatalog.Application
+namespace BooksCatalog.Application.Services
 {
     public class BooksService : IBooksService
     {
@@ -50,9 +52,9 @@ namespace BooksCatalog.Application
             Guard.Against.NullOrEmpty(request.GenreIds, nameof(request.GenreIds));
             Guard.Against.NullOrEmpty(request.PublisherIds, nameof(request.PublisherIds));
 
-            var authors = await _authorRepository.GetBySpec(new MultipleIds<Author>(request.AuthorIds));
-            var genres = await _genreRepository.GetBySpec(new MultipleIds<Genre>(request.GenreIds));
-            var publishers = await _publisherRepository.GetBySpec(new MultipleIds<Publisher>(request.PublisherIds));
+            var authors = await _authorRepository.GetBySpec(new MultipleIdsSpec<Author>(request.AuthorIds));
+            var genres = await _genreRepository.GetBySpec(new MultipleIdsSpec<Genre>(request.GenreIds));
+            var publishers = await _publisherRepository.GetBySpec(new MultipleIdsSpec<Publisher>(request.PublisherIds));
 
             var book = new Book(request.Title, request.ReleaseDate, request.Description,
                 request.Isbn, authors, genres, publishers);

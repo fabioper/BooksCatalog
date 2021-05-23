@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using BooksCatalog.Application;
+using BooksCatalog.Application.Interfaces;
 using BooksCatalog.Shared.Models.Requests;
 using Microsoft.AspNetCore.Mvc;
 
