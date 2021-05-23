@@ -25,9 +25,9 @@ namespace BooksCatalog.Core.Books
             ReleaseDate = releaseDate;
             Description = description;
             Isbn = isbn;
-            Authors = authors.ToList();
-            Genres = genres.ToList();
-            Publishers = publishers.ToList();
+            Authors = authors;
+            Genres = genres;
+            Publishers = publishers;
         }
 
         public Book()
