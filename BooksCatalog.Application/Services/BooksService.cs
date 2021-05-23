@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using BooksCatalog.Application.Services.Contracts;
 using BooksCatalog.Application.Services.Exceptions;
-using BooksCatalog.Application.Specifications;
+using BooksCatalog.Application.Services.Specifications;
 using BooksCatalog.Core.Authors;
 using BooksCatalog.Core.Books;
 using BooksCatalog.Core.Genres;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using BooksCatalog.Shared;
 
-namespace BooksCatalog.Application.Specifications
+namespace BooksCatalog.Application.Services.Specifications
 {
     public class MultipleIdsSpec<T> : Specification<T> where T : Entity
     {
