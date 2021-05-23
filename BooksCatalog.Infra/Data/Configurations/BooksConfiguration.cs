@@ -8,6 +8,25 @@ namespace BooksCatalog.Infra.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Book> builder)
         {
+            builder.ToTable("Books")
+                .HasKey(b => b.Id);
+
+            builder.HasIndex(b => b.Id);
+            builder.HasIndex(b => b.Isbn).IsUnique();
+            
+            builder.Property(b => b.Description);
+            builder.Property(b => b.Isbn);
+            builder.Property(b => b.Title);
+            builder.Property(b => b.ReleaseDate);
+
+            builder.HasMany(b => b.Authors)
+                .WithMany(a => a.Books);
+
+            builder.HasMany(b => b.Genres)
+                .WithMany(g => g.Books);
+
+            builder.HasMany(b => b.Publishers)
+                .WithMany(p => p.Books);
         }
     }
 }

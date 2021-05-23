@@ -1,5 +1,5 @@
-﻿using BooksCatalog.Core.Books;
-using BooksCatalog.Infra.Data.Configurations;
+﻿using System.Reflection;
+using BooksCatalog.Core.Books;
 using Microsoft.EntityFrameworkCore;
 
 namespace BooksCatalog.Infra.Data
@@ -16,7 +16,7 @@ namespace BooksCatalog.Infra.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new BooksConfiguration());
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }
 }
