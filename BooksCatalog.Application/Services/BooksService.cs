@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using BooksCatalog.Application.Interfaces;
+using BooksCatalog.Application.Services.Contracts;
+using BooksCatalog.Application.Services.Exceptions;
 using BooksCatalog.Application.Specifications;
 using BooksCatalog.Core.Authors;
 using BooksCatalog.Core.Books;
@@ -66,7 +67,7 @@ namespace BooksCatalog.Application.Services
         public async Task UpdateBook(UpdateBookRequest request)
         {
             var book = await _bookRepository.FindByIdAsync(request.Id);
-            if (book is null) throw new ArgumentException();
+            if (book is null) throw new BookNotFoundException();
 
             var updatedBook = _mapper.Map<Book>(request);
 
@@ -76,7 +77,7 @@ namespace BooksCatalog.Application.Services
         public async Task DeleteBook(int bookId)
         {
             var book = await _bookRepository.FindByIdAsync(bookId);
-            if (book is null) throw new ArgumentException();
+            if (book is null) throw new BookNotFoundException();
 
             await _bookRepository.RemoveAsync(book.Id);
         }

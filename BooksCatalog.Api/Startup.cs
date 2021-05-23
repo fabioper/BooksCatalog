@@ -1,6 +1,6 @@
 using BooksCatalog.Application;
-using BooksCatalog.Application.Interfaces;
 using BooksCatalog.Application.Services;
+using BooksCatalog.Application.Services.Contracts;
 using BooksCatalog.Core.Interfaces;
 using BooksCatalog.Infra.Data;
 using BooksCatalog.Infra.Data.Repositories;

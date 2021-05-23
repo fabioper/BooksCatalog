@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using BooksCatalog.Shared.Models.Requests;
 using BooksCatalog.Shared.Models.Responses;
 
-namespace BooksCatalog.Application.Interfaces
+namespace BooksCatalog.Application.Services.Contracts
 {
     public interface IBooksService
     {
