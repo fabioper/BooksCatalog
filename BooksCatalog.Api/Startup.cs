@@ -1,4 +1,6 @@
-using BooksCatalog.Application;
+using System;
+using System.IO;
+using System.Reflection;
 using BooksCatalog.Application.Services;
 using BooksCatalog.Application.Services.Contracts;
 using BooksCatalog.Core.Interfaces;
@@ -10,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace BooksCatalog.Api
 {
@@ -30,6 +33,19 @@ namespace BooksCatalog.Api
                 options.UseSqlite(_configuration.GetConnectionString("DefaultConnection")));
             
             services.AddAutoMapper(typeof(Startup).Assembly);
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "BooksCatalog API",
+                    Description = "API for manage book catalog"
+                });
+                
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });
 
             #region Services
 
@@ -52,6 +68,14 @@ namespace BooksCatalog.Api
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             app.UseHttpsRedirection();
+            
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "BooksCatalog API");
+                c.RoutePrefix = string.Empty;
+            });
+            
             app.UseRouting();
 
             app.UseEndpoints(endpoints => endpoints.MapControllers());
