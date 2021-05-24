@@ -23,15 +23,21 @@ namespace BooksCatalog.Application.Services
         private readonly IGenreRepository _genreRepository;
         private readonly IMapper _mapper;
         private readonly IPublisherRepository _publisherRepository;
+        private readonly IStorageService _storageService;
 
-        public BooksService(IBookRepository bookRepository, IMapper mapper, IAuthorRepository authorRepository,
-            IGenreRepository genreRepository, IPublisherRepository publisherRepository)
+        public BooksService(IBookRepository bookRepository,
+            IMapper mapper,
+            IAuthorRepository authorRepository,
+            IGenreRepository genreRepository,
+            IPublisherRepository publisherRepository,
+            IStorageService storageService)
         {
             _bookRepository = bookRepository;
             _mapper = mapper;
             _authorRepository = authorRepository;
             _genreRepository = genreRepository;
             _publisherRepository = publisherRepository;
+            _storageService = storageService;
         }
 
         public async Task<IEnumerable<BookResponse>> GetBooks()
@@ -79,6 +85,12 @@ namespace BooksCatalog.Application.Services
             if (book is null) throw new BookNotFoundException();
 
             await _bookRepository.RemoveAsync(book.Id);
+        }
+
+        public async Task<string> UploadImage(byte[] image, string name)
+        {
+            var uri = await _storageService.UploadFile(image, name);
+            return uri;
         }
     }
 }

@@ -6,6 +6,7 @@ using BooksCatalog.Application.Services.Contracts;
 using BooksCatalog.Core.Interfaces;
 using BooksCatalog.Infra.Data;
 using BooksCatalog.Infra.Data.Repositories;
+using BooksCatalog.Infra.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -50,6 +51,10 @@ namespace BooksCatalog.Api
             #region Services
 
             services.AddScoped<IBooksService, BooksService>();
+
+            var storageConfig = _configuration.GetSection("StorageConfig");
+            services.AddSingleton<IStorageService>(new BlobStorage(
+                storageConfig["ConnectionString"], storageConfig["FilesContainer"]));
 
             #endregion
 

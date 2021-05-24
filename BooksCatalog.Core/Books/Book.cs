@@ -11,16 +11,26 @@ namespace BooksCatalog.Core.Books
 {
     public class Book : Entity
     {
+        public string Title { get; }
+        public DateTime ReleaseDate { get; }
+        public string Description { get; }
+        public string Isbn { get; }
+        public string CoverUri { get; set; }
+
+        public ICollection<Author> Authors { get; }
+        public ICollection<Genre> Genres { get; }
+        public ICollection<Publisher> Publishers { get; }
+
         public Book(string title, DateTime releaseDate, string description, string isbn, List<Author> authors,
             List<Genre> genres, List<Publisher> publishers)
         {
             Guard.Against.NullOrEmpty(title, nameof(title));
             Guard.Against.NullOrEmpty(description, nameof(description));
             Guard.Against.NullOrEmpty(isbn, nameof(isbn));
-            Guard.Against.NullOrEmpty(authors, nameof(authors));
+            /*Guard.Against.NullOrEmpty(authors, nameof(authors));
             Guard.Against.NullOrEmpty(genres, nameof(genres));
-            Guard.Against.NullOrEmpty(publishers, nameof(publishers));
-            Guard.Against.InvalidIsbn(isbn);
+            Guard.Against.NullOrEmpty(publishers, nameof(publishers));*/
+            /*Guard.Against.InvalidIsbn(isbn);*/
 
             Title = title;
             ReleaseDate = releaseDate;
@@ -34,14 +44,5 @@ namespace BooksCatalog.Core.Books
         public Book() // EF Core required
         {
         }
-
-        public string Title { get; }
-        public DateTime ReleaseDate { get; }
-        public string Description { get; }
-        public string Isbn { get; }
-
-        public ICollection<Author> Authors { get; }
-        public ICollection<Genre> Genres { get; }
-        public ICollection<Publisher> Publishers { get; }
     }
 }

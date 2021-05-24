@@ -1,7 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
 using BooksCatalog.Application;
 using BooksCatalog.Application.Services.Contracts;
 using BooksCatalog.Shared.Models.Requests;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BooksCatalog.Api.Controllers
@@ -24,7 +26,7 @@ namespace BooksCatalog.Api.Controllers
             return Ok(books);
         }
 
-        [HttpGet("/{bookId:int}")]
+        [HttpGet("{bookId:int}")]
         public async Task<IActionResult> GetBook([FromRoute] int bookId)
         {
             var book = await _booksService.GetBookById(bookId);
@@ -46,11 +48,21 @@ namespace BooksCatalog.Api.Controllers
             return Ok();
         }
 
-        [HttpDelete("/{bookId:int}")]
+        [HttpDelete("{bookId:int}")]
         public async Task<IActionResult> DeleteBook([FromRoute] int bookId)
         {
             await _booksService.DeleteBook(bookId);
             return Ok();
+        }
+
+        [HttpPost("upload-image")]
+        public async Task<IActionResult> UploadImage([FromForm] IFormFile file, [FromForm] string name)
+        {
+            await using var memoryStream = new MemoryStream();
+            await file.CopyToAsync(memoryStream);
+            var imageUri = await _booksService.UploadImage(memoryStream.ToArray(), name);
+
+            return Ok(imageUri);
         }
     }
 }

@@ -6,11 +6,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\BooksCatalog.Application\BooksCatalog.Application.csproj" />
       <ProjectReference Include="..\BooksCatalog.Core\BooksCatalog.Core.csproj" />
       <ProjectReference Include="..\BooksCatalog.Shared\BooksCatalog.Shared.csproj" />
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Azure.Storage.Blobs" Version="12.8.4" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0-preview.3.21201.2" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.0-preview.3.21201.2" />
     </ItemGroup>

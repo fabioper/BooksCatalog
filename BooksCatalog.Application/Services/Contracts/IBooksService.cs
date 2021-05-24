@@ -12,5 +12,6 @@ namespace BooksCatalog.Application.Services.Contracts
         Task AddNewBook(AddNewBookRequest request);
         Task UpdateBook(UpdateBookRequest request);
         Task DeleteBook(int bookId);
+        Task<string> UploadImage(byte[] image, string name);
     }
 }
