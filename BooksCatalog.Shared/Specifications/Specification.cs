@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace BooksCatalog.Shared
+namespace BooksCatalog.Shared.Specifications
 {
     public abstract class Specification<T>
     {

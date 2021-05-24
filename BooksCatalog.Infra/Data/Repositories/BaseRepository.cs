@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BooksCatalog.Shared;
 using BooksCatalog.Shared.Repositories;
+using BooksCatalog.Shared.Specifications;
 using Microsoft.EntityFrameworkCore;
 
 namespace BooksCatalog.Infra.Data.Repositories

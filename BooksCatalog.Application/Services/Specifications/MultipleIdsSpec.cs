@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using BooksCatalog.Shared;
+using BooksCatalog.Shared.Specifications;
 
 namespace BooksCatalog.Application.Services.Specifications
 {
