@@ -6,6 +6,7 @@ using BooksCatalog.Core.Books.Guards;
 using BooksCatalog.Core.Genres;
 using BooksCatalog.Core.Publishers;
 using BooksCatalog.Shared;
+using BooksCatalog.Shared.Guards;
 
 namespace BooksCatalog.Core.Books
 {

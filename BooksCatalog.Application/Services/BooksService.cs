@@ -11,6 +11,7 @@ using BooksCatalog.Core.Genres;
 using BooksCatalog.Core.Interfaces;
 using BooksCatalog.Core.Publishers;
 using BooksCatalog.Shared;
+using BooksCatalog.Shared.Guards;
 using BooksCatalog.Shared.Models.Requests;
 using BooksCatalog.Shared.Models.Responses;
 

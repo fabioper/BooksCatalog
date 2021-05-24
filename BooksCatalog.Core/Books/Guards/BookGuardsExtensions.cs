@@ -1,5 +1,6 @@
 ﻿using BooksCatalog.Core.Books.Exceptions;
 using BooksCatalog.Shared;
+using BooksCatalog.Shared.Guards;
 
 namespace BooksCatalog.Core.Books.Guards
 {

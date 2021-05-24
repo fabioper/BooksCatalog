@@ -1,4 +1,4 @@
-namespace BooksCatalog.Shared
+namespace BooksCatalog.Shared.Guards
 {
     public interface IGuardClause
     {

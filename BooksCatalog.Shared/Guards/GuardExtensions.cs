@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BooksCatalog.Shared
+namespace BooksCatalog.Shared.Guards
 {
     public static class GuardExtensions
     {
