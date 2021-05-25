@@ -6,7 +6,7 @@ using BooksCatalog.Core.Publishers;
 using BooksCatalog.Shared.Models.Requests;
 using BooksCatalog.Shared.Models.Responses;
 
-namespace BooksCatalog.Application.Profiles
+namespace BooksCatalog.Api.Profiles
 {
     public class BooksProfile : Profile
     {

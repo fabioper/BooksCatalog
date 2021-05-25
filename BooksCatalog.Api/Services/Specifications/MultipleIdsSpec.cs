@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using BooksCatalog.Shared;
 using BooksCatalog.Shared.Specifications;
 
-namespace BooksCatalog.Application.Services.Specifications
+namespace BooksCatalog.Api.Services.Specifications
 {
     public class MultipleIdsSpec<T> : Specification<T> where T : Entity
     {

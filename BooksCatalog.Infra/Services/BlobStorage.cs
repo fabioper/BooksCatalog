@@ -1,8 +1,7 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs;
-using BooksCatalog.Application.Services.Contracts;
+using BooksCatalog.Infra.Services.Contracts;
 using BooksCatalog.Shared.Guards;
 
 namespace BooksCatalog.Infra.Services

@@ -1,12 +1,13 @@
 using System;
 using System.IO;
 using System.Reflection;
-using BooksCatalog.Application.Services;
-using BooksCatalog.Application.Services.Contracts;
+using BooksCatalog.Api.Services;
+using BooksCatalog.Api.Services.Contracts;
 using BooksCatalog.Core.Interfaces;
 using BooksCatalog.Infra.Data;
 using BooksCatalog.Infra.Data.Repositories;
 using BooksCatalog.Infra.Services;
+using BooksCatalog.Infra.Services.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +34,8 @@ namespace BooksCatalog.Api
             services.AddDbContext<BooksCatalogContext>(options =>
                 options.UseSqlite(_configuration.GetConnectionString("DefaultConnection")));
             
-            services.AddAutoMapper(typeof(Startup).Assembly);
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
@@ -53,8 +55,7 @@ namespace BooksCatalog.Api
             services.AddScoped<IBooksService, BooksService>();
 
             var storageConfig = _configuration.GetSection("StorageConfig");
-            services.AddSingleton<IStorageService>(new BlobStorage(
-                storageConfig["ConnectionString"]));
+            services.AddSingleton<IStorageService>(new BlobStorage(storageConfig["ConnectionString"]));
 
             #endregion
 

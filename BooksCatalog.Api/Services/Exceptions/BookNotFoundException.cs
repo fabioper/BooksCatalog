@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BooksCatalog.Application.Services.Exceptions
+namespace BooksCatalog.Api.Services.Exceptions
 {
     public class BookNotFoundException : ArgumentException
     {

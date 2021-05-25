@@ -1,7 +1,6 @@
-﻿using System.IO;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
-namespace BooksCatalog.Application.Services.Contracts
+namespace BooksCatalog.Infra.Services.Contracts
 {
     public interface IStorageService
     {

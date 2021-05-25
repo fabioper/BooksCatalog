@@ -2,20 +2,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using BooksCatalog.Application.Services.Contracts;
-using BooksCatalog.Application.Services.Exceptions;
-using BooksCatalog.Application.Services.Specifications;
+using BooksCatalog.Api.Services.Contracts;
+using BooksCatalog.Api.Services.Exceptions;
+using BooksCatalog.Api.Services.Specifications;
 using BooksCatalog.Core.Authors;
 using BooksCatalog.Core.Books;
 using BooksCatalog.Core.Genres;
 using BooksCatalog.Core.Interfaces;
 using BooksCatalog.Core.Publishers;
-using BooksCatalog.Shared;
+using BooksCatalog.Infra.Services;
+using BooksCatalog.Infra.Services.Contracts;
 using BooksCatalog.Shared.Guards;
 using BooksCatalog.Shared.Models.Requests;
 using BooksCatalog.Shared.Models.Responses;
 
-namespace BooksCatalog.Application.Services
+namespace BooksCatalog.Api.Services
 {
     public class BooksService : IBooksService
     {

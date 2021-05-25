@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
-using BooksCatalog.Application;
-using BooksCatalog.Application.Services.Contracts;
+using BooksCatalog.Api.Services.Contracts;
 using BooksCatalog.Shared.Models.Requests;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
