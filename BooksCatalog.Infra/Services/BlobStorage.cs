@@ -3,23 +3,26 @@ using System.IO;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using BooksCatalog.Application.Services.Contracts;
+using BooksCatalog.Shared.Guards;
 
 namespace BooksCatalog.Infra.Services
 {
     public class BlobStorage : IStorageService
     {
         private readonly string _connectionString;
-        private readonly string _containerName;
-        
-        public BlobStorage(string connectionString, string containerName)
+
+        public BlobStorage(string connectionString)
         {
             _connectionString = connectionString;
-            _containerName = containerName;
         }
         
-        public async Task<string> UploadFile(byte[] stream, string filename)
+        public async Task<string> UploadFile(byte[] stream, string filename, string containerName)
         {
-            var blobClient = GetBlobClient(filename);
+            Guard.Against.NullOrEmpty(filename, nameof(filename));
+            Guard.Against.FilenameWithoutExtension(filename);
+            Guard.Against.InvalidContainerName(containerName);
+
+            var blobClient = GetBlobClient(filename, containerName);
 
             await using var fileStream = new MemoryStream(stream);
             await blobClient.UploadAsync(fileStream, true);
@@ -27,10 +30,10 @@ namespace BooksCatalog.Infra.Services
             return blobClient.Uri.ToString();
         }
 
-        private BlobClient GetBlobClient(string filename)
+        private BlobClient GetBlobClient(string filename, string containerName)
         {
             var blobServiceClient = new BlobServiceClient(_connectionString);
-            var containerClient = blobServiceClient.GetBlobContainerClient(_containerName);
+            var containerClient = blobServiceClient.GetBlobContainerClient(containerName);
             var blobClient = containerClient.GetBlobClient(filename);
             return blobClient;
         }

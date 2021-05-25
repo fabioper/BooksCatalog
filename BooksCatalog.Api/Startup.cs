@@ -54,7 +54,7 @@ namespace BooksCatalog.Api
 
             var storageConfig = _configuration.GetSection("StorageConfig");
             services.AddSingleton<IStorageService>(new BlobStorage(
-                storageConfig["ConnectionString"], storageConfig["FilesContainer"]));
+                storageConfig["ConnectionString"]));
 
             #endregion
 

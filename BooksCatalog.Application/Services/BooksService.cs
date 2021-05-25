@@ -90,7 +90,7 @@ namespace BooksCatalog.Application.Services
 
         public async Task<string> UploadImage(byte[] image, string name)
         {
-            var uri = await _storageService.UploadFile(image, name);
+            var uri = await _storageService.UploadFile(image, name, "book-covers");
             return uri;
         }
     }
