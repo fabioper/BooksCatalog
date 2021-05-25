@@ -1,4 +1,4 @@
-﻿namespace BooksCatalog.Shared.Models.Responses
+﻿namespace BooksCatalog.Api.Models.Responses
 {
     public class PublisherResponse
     {

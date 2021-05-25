@@ -1,6 +1,6 @@
-﻿namespace BooksCatalog.Shared.Models.Responses
+﻿namespace BooksCatalog.Api.Models.Responses
 {
-    public class GenreResponse
+    public class AuthorResponse
     {
         public int Id { get; set; }
         public string Name { get; set; }

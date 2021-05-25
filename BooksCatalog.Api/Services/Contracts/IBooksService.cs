@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using BooksCatalog.Shared.Models.Requests;
-using BooksCatalog.Shared.Models.Responses;
+using BooksCatalog.Api.Models.Requests;
+using BooksCatalog.Api.Models.Responses;
 
 namespace BooksCatalog.Api.Services.Contracts
 {
@@ -12,6 +12,6 @@ namespace BooksCatalog.Api.Services.Contracts
         Task AddNewBook(AddNewBookRequest request);
         Task UpdateBook(UpdateBookRequest request);
         Task DeleteBook(int bookId);
-        Task<string> UploadImage(byte[] image, string name);
+        Task<UploadImageResponse> UploadImage(UploadImageRequest request);
     }
 }

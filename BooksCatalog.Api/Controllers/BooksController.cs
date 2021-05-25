@@ -1,8 +1,6 @@
-﻿using System.IO;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using BooksCatalog.Api.Models.Requests;
 using BooksCatalog.Api.Services.Contracts;
-using BooksCatalog.Shared.Models.Requests;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BooksCatalog.Api.Controllers
@@ -55,13 +53,10 @@ namespace BooksCatalog.Api.Controllers
         }
 
         [HttpPost("upload-image")]
-        public async Task<IActionResult> UploadImage([FromForm] IFormFile file, [FromForm] string name)
+        public async Task<IActionResult> UploadImage([FromForm] UploadImageRequest request)
         {
-            await using var memoryStream = new MemoryStream();
-            await file.CopyToAsync(memoryStream);
-            var imageUri = await _booksService.UploadImage(memoryStream.ToArray(), name);
-
-            return Ok(imageUri);
+            var response = await _booksService.UploadImage(request);
+            return Ok(response);
         }
     }
 }

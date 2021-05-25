@@ -1,9 +1,13 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using BooksCatalog.Api.Models.Requests;
+using BooksCatalog.Api.Models.Responses;
 using BooksCatalog.Api.Services.Contracts;
 using BooksCatalog.Api.Services.Exceptions;
+using BooksCatalog.Api.Services.Extensions;
 using BooksCatalog.Api.Services.Specifications;
 using BooksCatalog.Core.Authors;
 using BooksCatalog.Core.Books;
@@ -13,8 +17,6 @@ using BooksCatalog.Core.Publishers;
 using BooksCatalog.Infra.Services;
 using BooksCatalog.Infra.Services.Contracts;
 using BooksCatalog.Shared.Guards;
-using BooksCatalog.Shared.Models.Requests;
-using BooksCatalog.Shared.Models.Responses;
 
 namespace BooksCatalog.Api.Services
 {
@@ -89,10 +91,14 @@ namespace BooksCatalog.Api.Services
             await _bookRepository.RemoveAsync(book.Id);
         }
 
-        public async Task<string> UploadImage(byte[] image, string name)
+        public async Task<UploadImageResponse> UploadImage(UploadImageRequest request)
         {
-            var uri = await _storageService.UploadFile(image, name, "book-covers");
-            return uri;
+            Guard.Against.Null(request.Data, nameof(request.Data));
+            Guard.Against.NullOrEmpty(request.Name, nameof(request.Name));
+
+            var streamData = await request.Data.GetBytes();
+            var uri = await _storageService.UploadFile(streamData, request.Name, "book-covers");
+            return new UploadImageResponse(uri, request.Name);
         }
     }
 }

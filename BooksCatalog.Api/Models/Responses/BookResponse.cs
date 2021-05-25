@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BooksCatalog.Shared.Models.Responses
+namespace BooksCatalog.Api.Models.Responses
 {
     public class BookResponse
     {
