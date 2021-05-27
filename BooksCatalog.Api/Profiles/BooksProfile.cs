@@ -14,9 +14,9 @@ namespace BooksCatalog.Api.Profiles
         {
             CreateMap<Book, BookResponse>();
             CreateMap<UpdateBookRequest, Book>();
-
-            CreateMap<Author, AuthorResponse>();
+            
             CreateMap<Genre, GenreResponse>();
+
             CreateMap<Publisher, PublisherResponse>();
         }
     }

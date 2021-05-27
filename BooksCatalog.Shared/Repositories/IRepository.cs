@@ -11,7 +11,7 @@ namespace BooksCatalog.Shared.Repositories
         Task<T> FindByIdAsync(int id);
         Task<List<T>> GetBySpec(Specification<T> spec);
         Task UpdateAsync(T entity);
-        Task RemoveAsync(int id);
+        Task RemoveAsync(T entity);
         Task CommitChangesAsync();
     }
 }

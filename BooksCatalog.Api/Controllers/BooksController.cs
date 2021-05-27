@@ -1,12 +1,13 @@
 ﻿using System.Threading.Tasks;
 using BooksCatalog.Api.Models.Requests;
 using BooksCatalog.Api.Services.Contracts;
+using BooksCatalog.Api.Services.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BooksCatalog.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/books")]
     public class BooksController : ControllerBase
     {
         private readonly IBooksService _booksService;
@@ -26,9 +27,16 @@ namespace BooksCatalog.Api.Controllers
         [HttpGet("{bookId:int}")]
         public async Task<IActionResult> GetBook([FromRoute] int bookId)
         {
-            var book = await _booksService.GetBookById(bookId);
-            if (book is null) return NotFound();
-            return Ok();
+            try
+            {
+                var book = await _booksService.GetBookById(bookId);
+                if (book is null) return NotFound();
+                return Ok();
+            }
+            catch (BookNotFoundException)
+            {
+                return NotFound();
+            }
         }
 
         [HttpPost]
@@ -41,18 +49,32 @@ namespace BooksCatalog.Api.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateBook([FromBody] UpdateBookRequest request)
         {
-            await _booksService.UpdateBook(request);
-            return Ok();
+            try
+            {
+                await _booksService.UpdateBook(request);
+                return Ok();
+            }
+            catch (BookNotFoundException)
+            {
+                return NotFound();
+            }
         }
 
         [HttpDelete("{bookId:int}")]
         public async Task<IActionResult> DeleteBook([FromRoute] int bookId)
         {
-            await _booksService.DeleteBook(bookId);
-            return Ok();
+            try
+            {
+                await _booksService.DeleteBook(bookId);
+                return Ok();
+            }
+            catch (BookNotFoundException)
+            {
+                return NotFound();
+            }
         }
 
-        [HttpPost("upload-image")]
+        [HttpPost("upload-cover")]
         public async Task<IActionResult> UploadImage([FromForm] UploadImageRequest request)
         {
             var response = await _booksService.UploadImage(request);

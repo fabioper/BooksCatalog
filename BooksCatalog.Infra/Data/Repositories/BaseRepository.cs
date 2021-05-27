@@ -47,9 +47,9 @@ namespace BooksCatalog.Infra.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public Task RemoveAsync(int id)
+        public async Task RemoveAsync(T entity)
         {
-            throw new NotImplementedException();
+            await Task.Run(() => _entitySet.Remove(entity));
         }
 
         public async Task CommitChangesAsync()

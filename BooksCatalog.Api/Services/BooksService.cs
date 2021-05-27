@@ -53,6 +53,7 @@ namespace BooksCatalog.Api.Services
         public async Task<BookResponse> GetBookById(int bookId)
         {
             var book = await _bookRepository.FindByIdAsync(bookId);
+            if (book is null) throw new BookNotFoundException();
             return _mapper.Map<BookResponse>(book);
         }
 
@@ -88,7 +89,7 @@ namespace BooksCatalog.Api.Services
             var book = await _bookRepository.FindByIdAsync(bookId);
             if (book is null) throw new BookNotFoundException();
 
-            await _bookRepository.RemoveAsync(book.Id);
+            await _bookRepository.RemoveAsync(book);
         }
 
         public async Task<UploadImageResponse> UploadImage(UploadImageRequest request)

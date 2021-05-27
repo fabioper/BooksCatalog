@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using BooksCatalog.Infra.Services.Contracts;
 using BooksCatalog.Shared.Guards;
 
@@ -33,6 +34,9 @@ namespace BooksCatalog.Infra.Services
         {
             var blobServiceClient = new BlobServiceClient(_connectionString);
             var containerClient = blobServiceClient.GetBlobContainerClient(containerName);
+
+            containerClient.CreateIfNotExists(PublicAccessType.Blob);
+
             var blobClient = containerClient.GetBlobClient(filename);
             return blobClient;
         }

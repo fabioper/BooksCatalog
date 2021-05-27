@@ -53,6 +53,7 @@ namespace BooksCatalog.Api
             #region Services
 
             services.AddScoped<IBooksService, BooksService>();
+            services.AddScoped<IAuthorsService, AuthorsService>();
 
             var storageConfig = _configuration.GetSection("StorageConfig");
             services.AddSingleton<IStorageService>(new BlobStorage(storageConfig["ConnectionString"]));
