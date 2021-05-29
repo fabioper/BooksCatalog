@@ -41,7 +41,7 @@ namespace BooksCatalog.Api.Controllers
         {
             try
             {
-                await _authorsService.AddAuthor(request);
+                await _authorsService.Add(request);
                 return Ok();
             }
             catch (AuthorNotFoundException)
@@ -55,7 +55,7 @@ namespace BooksCatalog.Api.Controllers
         {
             try
             {
-                await _authorsService.UpdateAuthor(request);
+                await _authorsService.Update(request);
                 return Ok();
             }
             catch (AuthorNotFoundException)
@@ -69,7 +69,7 @@ namespace BooksCatalog.Api.Controllers
         {
             try 
             {
-                await _authorsService.RemoveAuthor(authorId);
+                await _authorsService.Remove(authorId);
                 return Ok();
             }
             catch (AuthorNotFoundException)

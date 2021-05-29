@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -14,7 +13,6 @@ using BooksCatalog.Core.Books;
 using BooksCatalog.Core.Genres;
 using BooksCatalog.Core.Interfaces;
 using BooksCatalog.Core.Publishers;
-using BooksCatalog.Infra.Services;
 using BooksCatalog.Infra.Services.Contracts;
 using BooksCatalog.Shared.Guards;
 

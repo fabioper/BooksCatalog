@@ -9,9 +9,9 @@ namespace BooksCatalog.Api.Services.Contracts
     {
         Task<IEnumerable<AuthorResponse>> GetAll();
         Task<AuthorResponse> FindById(int authorId);
-        Task AddAuthor(AddAuthorRequest request);
-        Task UpdateAuthor(UpdateAuthorRequest request);
-        Task RemoveAuthor(int authorId);
+        Task Add(AddAuthorRequest request);
+        Task Update(UpdateAuthorRequest request);
+        Task Remove(int authorId);
         Task<UploadImageResponse> UploadImage(UploadImageRequest request);
     }
 }

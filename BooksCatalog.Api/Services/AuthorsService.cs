@@ -42,7 +42,7 @@ namespace BooksCatalog.Api.Services
             return _mapper.Map<AuthorResponse>(author);
         }
 
-        public async Task AddAuthor(AddAuthorRequest request)
+        public async Task Add(AddAuthorRequest request)
         {
             var author = new Author(request.FirstName, request.LastName, request.ImageUri, request.BirthDate);
 
@@ -50,7 +50,7 @@ namespace BooksCatalog.Api.Services
             await _authorRepository.CommitChangesAsync();
         }
 
-        public async Task UpdateAuthor(UpdateAuthorRequest request)
+        public async Task Update(UpdateAuthorRequest request)
         {
             Guard.Against.NegativeOrZero(request.Id, nameof(request.Id));
             
@@ -63,7 +63,7 @@ namespace BooksCatalog.Api.Services
             await _authorRepository.CommitChangesAsync();
         }
 
-        public async Task RemoveAuthor(int authorId)
+        public async Task Remove(int authorId)
         {
             Guard.Against.NegativeOrZero(authorId, nameof(authorId));
             
