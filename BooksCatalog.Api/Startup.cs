@@ -32,7 +32,7 @@ namespace BooksCatalog.Api
             services.AddControllers();
 
             services.AddDbContext<BooksCatalogContext>(options =>
-                options.UseSqlite(_configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlite(_configuration.GetConnectionString("DbConnection")));
             
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             
@@ -56,8 +56,8 @@ namespace BooksCatalog.Api
             services.AddScoped<IAuthorsService, AuthorsService>();
             services.AddScoped<IPublishersService, PublishersService>();
 
-            var storageConfig = _configuration.GetSection("StorageConfig");
-            services.AddSingleton<IStorageService>(new BlobStorage(storageConfig["ConnectionString"]));
+            services.AddSingleton<IStorageService>(
+                new BlobStorage(_configuration.GetConnectionString("BlobConnection")));
 
             #endregion
 
