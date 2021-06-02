@@ -1,0 +1,8 @@
+﻿using System;
+
+namespace BooksCatalog.Api.Services.Exceptions
+{
+    public class GenreNotFoundException : Exception
+    {
+    }
+}

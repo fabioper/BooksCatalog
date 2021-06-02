@@ -55,6 +55,7 @@ namespace BooksCatalog.Api
             services.AddScoped<IBooksService, BooksService>();
             services.AddScoped<IAuthorsService, AuthorsService>();
             services.AddScoped<IPublishersService, PublishersService>();
+            services.AddScoped<IGenresService, GenresService>();
 
             services.AddSingleton<IStorageService>(
                 new BlobStorage(_configuration.GetConnectionString("BlobConnection")));
