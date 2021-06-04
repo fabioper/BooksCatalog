@@ -2,5 +2,6 @@
 {
     public class AddNewPublisher
     {
+        public string Name { get; set; }
     }
 }

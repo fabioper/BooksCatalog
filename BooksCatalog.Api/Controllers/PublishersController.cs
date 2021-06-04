@@ -2,6 +2,7 @@
 using BooksCatalog.Api.Models.Requests;
 using BooksCatalog.Api.Services.Contracts;
 using BooksCatalog.Api.Services.Exceptions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BooksCatalog.Api.Controllers
@@ -71,6 +72,13 @@ namespace BooksCatalog.Api.Controllers
             {
                 return NotFound();
             }
+        }
+
+        [HttpPut("upload-image")]
+        public async Task<IActionResult> UploadImage(IFormFile file)
+        {
+            var response = await _publishersService.UploadImage(file);
+            return Ok(response);
         }
     }
 }

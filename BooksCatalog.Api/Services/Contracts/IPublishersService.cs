@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using BooksCatalog.Api.Models.Requests;
 using BooksCatalog.Api.Models.Responses;
+using Microsoft.AspNetCore.Http;
 
 namespace BooksCatalog.Api.Services.Contracts
 {
@@ -13,5 +14,6 @@ namespace BooksCatalog.Api.Services.Contracts
         Task UpdatePublisher(UpdatePublisherRequest request);
 
         Task DeletePublisher(int publisherId);
+        Task<UploadImageResponse> UploadImage(IFormFile file);
     }
 }

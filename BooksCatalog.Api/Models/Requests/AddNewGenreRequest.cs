@@ -2,5 +2,6 @@
 {
     public class AddNewGenreRequest
     {
+        public string Name { get; set; }
     }
 }
