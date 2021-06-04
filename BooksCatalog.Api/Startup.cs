@@ -32,7 +32,7 @@ namespace BooksCatalog.Api
             services.AddControllers();
 
             services.AddDbContext<BooksCatalogContext>(options =>
-                options.UseSqlite(_configuration.GetConnectionString("DbConnection")));
+                options.UseNpgsql(_configuration.GetConnectionString("DbConnection")));
             
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             
