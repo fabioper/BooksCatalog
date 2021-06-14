@@ -1,13 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using BooksCatalog.Api.Models.Events;
 using BooksCatalog.Api.Models.Requests;
 using BooksCatalog.Api.Models.Responses;
 using BooksCatalog.Api.Services.Contracts;
 using BooksCatalog.Api.Services.Exceptions;
 using BooksCatalog.Core.Genres;
 using BooksCatalog.Core.Interfaces;
+using BooksCatalog.Infra.Services.Contracts;
+using BooksCatalog.Infra.Services.Messaging;
 
 namespace BooksCatalog.Api.Services
 {
@@ -15,11 +19,13 @@ namespace BooksCatalog.Api.Services
     {
         private readonly IGenreRepository _genreRepository;
         private readonly IMapper _mapper;
+        private readonly IEventBus _events;
 
-        public GenresService(IGenreRepository genreRepository, IMapper mapper)
+        public GenresService(IGenreRepository genreRepository, IMapper mapper, IEventBus events)
         {
             _genreRepository = genreRepository;
             _mapper = mapper;
+            _events = events;
         }
 
         public async Task<IEnumerable<GenreResponse>> GetAll()
@@ -41,6 +47,7 @@ namespace BooksCatalog.Api.Services
 
             await _genreRepository.AddAsync(genre);
             await _genreRepository.CommitChangesAsync();
+            await _events.Publish(new GenreCreated(genre.Id, DateTime.UtcNow));
         }
 
         public async Task UpdateGenre(UpdateGenreRequest request)

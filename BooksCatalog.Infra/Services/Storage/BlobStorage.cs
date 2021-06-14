@@ -2,10 +2,11 @@
 using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using BooksCatalog.Infra.Services.Contracts;
+using BooksCatalog.Infra.Services.Storage.Contracts;
+using BooksCatalog.Infra.Services.Storage.Extensions;
 using BooksCatalog.Shared.Guards;
 
-namespace BooksCatalog.Infra.Services
+namespace BooksCatalog.Infra.Services.Storage
 {
     public class BlobStorage : IStorageService
     {

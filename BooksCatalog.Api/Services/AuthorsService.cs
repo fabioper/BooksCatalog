@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using BooksCatalog.Api.Models.Events;
 using BooksCatalog.Api.Models.Requests;
 using BooksCatalog.Api.Models.Responses;
 using BooksCatalog.Api.Services.Contracts;
@@ -11,6 +12,7 @@ using BooksCatalog.Api.Services.Extensions;
 using BooksCatalog.Core.Authors;
 using BooksCatalog.Core.Interfaces;
 using BooksCatalog.Infra.Services.Contracts;
+using BooksCatalog.Infra.Services.Storage.Contracts;
 using BooksCatalog.Shared.Guards;
 
 namespace BooksCatalog.Api.Services
@@ -20,12 +22,15 @@ namespace BooksCatalog.Api.Services
         private readonly IAuthorRepository _authorRepository;
         private readonly IMapper _mapper;
         private readonly IStorageService _storageService;
+        private readonly IEventBus _events;
 
-        public AuthorsService(IAuthorRepository authorRepository, IMapper mapper, IStorageService storageService)
+        public AuthorsService(IAuthorRepository authorRepository,
+            IMapper mapper, IStorageService storageService, IEventBus events)
         {
             _authorRepository = authorRepository;
             _mapper = mapper;
             _storageService = storageService;
+            _events = events;
         }
 
         public async Task<IEnumerable<AuthorResponse>> GetAll()
@@ -48,6 +53,7 @@ namespace BooksCatalog.Api.Services
 
             await _authorRepository.AddAsync(author);
             await _authorRepository.CommitChangesAsync();
+            await _events.Publish(new AuthorCreated(author.Id, DateTime.UtcNow));
         }
 
         public async Task Update(UpdateAuthorRequest request)

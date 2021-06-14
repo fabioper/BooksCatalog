@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using BooksCatalog.Api.Models.Events;
 using BooksCatalog.Api.Models.Requests;
 using BooksCatalog.Api.Models.Responses;
 using BooksCatalog.Api.Services.Contracts;
@@ -14,6 +16,7 @@ using BooksCatalog.Core.Genres;
 using BooksCatalog.Core.Interfaces;
 using BooksCatalog.Core.Publishers;
 using BooksCatalog.Infra.Services.Contracts;
+using BooksCatalog.Infra.Services.Storage.Contracts;
 using BooksCatalog.Shared.Guards;
 
 namespace BooksCatalog.Api.Services
@@ -26,13 +29,15 @@ namespace BooksCatalog.Api.Services
         private readonly IMapper _mapper;
         private readonly IPublisherRepository _publisherRepository;
         private readonly IStorageService _storageService;
+        private readonly IEventBus _events;
 
         public BooksService(IBookRepository bookRepository,
             IMapper mapper,
             IAuthorRepository authorRepository,
             IGenreRepository genreRepository,
             IPublisherRepository publisherRepository,
-            IStorageService storageService)
+            IStorageService storageService,
+            IEventBus events)
         {
             _bookRepository = bookRepository;
             _mapper = mapper;
@@ -40,6 +45,7 @@ namespace BooksCatalog.Api.Services
             _genreRepository = genreRepository;
             _publisherRepository = publisherRepository;
             _storageService = storageService;
+            _events = events;
         }
 
         public async Task<IEnumerable<BookResponse>> GetBooks()
@@ -70,6 +76,7 @@ namespace BooksCatalog.Api.Services
 
             await _bookRepository.AddAsync(book);
             await _bookRepository.CommitChangesAsync();
+            await _events.Publish(new BookCreated(book.Id, DateTime.UtcNow));
         }
 
         public async Task UpdateBook(UpdateBookRequest request)
