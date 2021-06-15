@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using BooksCatalog.Api.Models.Events;
 using BooksCatalog.Api.Models.Requests;
 using BooksCatalog.Api.Models.Responses;
 using BooksCatalog.Api.Services.Contracts;
 using BooksCatalog.Api.Services.Exceptions;
 using BooksCatalog.Api.Services.Extensions;
 using BooksCatalog.Api.Services.Specifications;
-using BooksCatalog.Core.Authors;
+using BooksCatalog.Core;
+using BooksCatalog.Core.Author;
 using BooksCatalog.Core.Books;
-using BooksCatalog.Core.Genres;
+using BooksCatalog.Core.Books.Events;
+using BooksCatalog.Core.Genre;
 using BooksCatalog.Core.Interfaces;
-using BooksCatalog.Core.Publishers;
-using BooksCatalog.Infra.Services.Contracts;
+using BooksCatalog.Core.Interfaces.Messaging;
+using BooksCatalog.Core.Interfaces.Repositories;
+using BooksCatalog.Core.Publisher;
 using BooksCatalog.Infra.Services.Storage.Contracts;
 using BooksCatalog.Shared.Guards;
 
@@ -29,7 +31,7 @@ namespace BooksCatalog.Api.Services
         private readonly IMapper _mapper;
         private readonly IPublisherRepository _publisherRepository;
         private readonly IStorageService _storageService;
-        private readonly IEventBus _events;
+        private readonly IMessagePublisher _messagePublisher;
 
         public BooksService(IBookRepository bookRepository,
             IMapper mapper,
@@ -37,7 +39,7 @@ namespace BooksCatalog.Api.Services
             IGenreRepository genreRepository,
             IPublisherRepository publisherRepository,
             IStorageService storageService,
-            IEventBus events)
+            IMessagePublisher messagePublisher)
         {
             _bookRepository = bookRepository;
             _mapper = mapper;
@@ -45,7 +47,7 @@ namespace BooksCatalog.Api.Services
             _genreRepository = genreRepository;
             _publisherRepository = publisherRepository;
             _storageService = storageService;
-            _events = events;
+            _messagePublisher = messagePublisher;
         }
 
         public async Task<IEnumerable<BookResponse>> GetBooks()
@@ -67,16 +69,16 @@ namespace BooksCatalog.Api.Services
             Guard.Against.NullOrEmpty(request.GenreIds, nameof(request.GenreIds));
             Guard.Against.NullOrEmpty(request.PublisherIds, nameof(request.PublisherIds));
 
-            var authors = await _authorRepository.GetBySpec(new MultipleIdsSpec<Author>(request.AuthorIds));
-            var genres = await _genreRepository.GetBySpec(new MultipleIdsSpec<Genre>(request.GenreIds));
-            var publishers = await _publisherRepository.GetBySpec(new MultipleIdsSpec<Publisher>(request.PublisherIds));
+            var authors = await _authorRepository.GetBy(new MultipleIdsSpec<Author>(request.AuthorIds));
+            var genres = await _genreRepository.GetBy(new MultipleIdsSpec<Genre>(request.GenreIds));
+            var publishers = await _publisherRepository.GetBy(new MultipleIdsSpec<Publisher>(request.PublisherIds));
 
             var book = new Book(request.Title, request.ReleaseDate, request.Description,
                 request.Isbn, authors, genres, publishers);
 
             await _bookRepository.AddAsync(book);
             await _bookRepository.CommitChangesAsync();
-            await _events.Publish(new BookCreated(book.Id, DateTime.UtcNow));
+            await _messagePublisher.Publish(new BookCreated(book.Id, DateTime.UtcNow));
         }
 
         public async Task UpdateBook(UpdateBookRequest request)

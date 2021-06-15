@@ -1,5 +1,7 @@
-﻿using BooksCatalog.Core.Authors;
+﻿using BooksCatalog.Core;
+using BooksCatalog.Core.Author;
 using BooksCatalog.Core.Interfaces;
+using BooksCatalog.Core.Interfaces.Repositories;
 
 namespace BooksCatalog.Infra.Data.Repositories
 {

@@ -4,7 +4,7 @@ using BooksCatalog.Core.Books;
 using BooksCatalog.Shared;
 using BooksCatalog.Shared.Guards;
 
-namespace BooksCatalog.Core.Authors
+namespace BooksCatalog.Core.Author
 {
     public class Author : Entity
     {

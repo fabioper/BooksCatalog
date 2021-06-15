@@ -2,11 +2,10 @@
 using BooksCatalog.Core.Books;
 using BooksCatalog.Shared;
 
-namespace BooksCatalog.Core.Genres
+namespace BooksCatalog.Core.Publisher
 {
-    public class Genre : Entity
+    public class Publisher : Entity
     {
-        public string Name { get; set; }
         public ICollection<Book> Books { get; set; }
     }
 }

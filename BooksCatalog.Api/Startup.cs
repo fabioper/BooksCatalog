@@ -4,9 +4,10 @@ using System.Reflection;
 using BooksCatalog.Api.Services;
 using BooksCatalog.Api.Services.Contracts;
 using BooksCatalog.Core.Interfaces;
+using BooksCatalog.Core.Interfaces.Messaging;
+using BooksCatalog.Core.Interfaces.Repositories;
 using BooksCatalog.Infra.Data;
 using BooksCatalog.Infra.Data.Repositories;
-using BooksCatalog.Infra.Services.Contracts;
 using BooksCatalog.Infra.Services.Messaging;
 using BooksCatalog.Infra.Services.Storage;
 using BooksCatalog.Infra.Services.Storage.Contracts;
@@ -61,7 +62,7 @@ namespace BooksCatalog.Api
             services.AddScoped<IPublishersService, PublishersService>();
             services.AddScoped<IGenresService, GenresService>();
             
-            services.AddSingleton<IEventBus, EventBus>();
+            services.AddSingleton<IMessagePublisher, MessagePublisher>();
             services.AddSingleton<IStorageService>(
                 new BlobStorage(_configuration.GetConnectionString("BlobConnection")));
 

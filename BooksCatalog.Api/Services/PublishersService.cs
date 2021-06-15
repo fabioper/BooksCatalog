@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using BooksCatalog.Api.Models.Events;
 using BooksCatalog.Api.Models.Requests;
 using BooksCatalog.Api.Models.Responses;
 using BooksCatalog.Api.Services.Contracts;
 using BooksCatalog.Api.Services.Exceptions;
 using BooksCatalog.Api.Services.Extensions;
+using BooksCatalog.Core;
 using BooksCatalog.Core.Interfaces;
-using BooksCatalog.Core.Publishers;
-using BooksCatalog.Infra.Services.Contracts;
+using BooksCatalog.Core.Interfaces.Messaging;
+using BooksCatalog.Core.Interfaces.Repositories;
+using BooksCatalog.Core.Publisher;
+using BooksCatalog.Core.Publisher.Events;
 using BooksCatalog.Infra.Services.Storage.Contracts;
 using BooksCatalog.Shared.Guards;
 using Microsoft.AspNetCore.Http;
@@ -23,15 +25,15 @@ namespace BooksCatalog.Api.Services
         private readonly IPublisherRepository _publisherRepository;
         private readonly IStorageService _storageService;
         private readonly IMapper _mapper;
-        private readonly IEventBus _events;
+        private readonly IMessagePublisher _messagePublisher;
 
         public PublishersService(IPublisherRepository publisherRepository,
-            IMapper mapper, IStorageService storageService, IEventBus events)
+            IMapper mapper, IStorageService storageService, IMessagePublisher messagePublisher)
         {
             _publisherRepository = publisherRepository;
             _mapper = mapper;
             _storageService = storageService;
-            _events = events;
+            _messagePublisher = messagePublisher;
         }
 
         public async Task<IEnumerable<PublisherResponse>> GetAllPublishers()
@@ -54,7 +56,7 @@ namespace BooksCatalog.Api.Services
 
             await _publisherRepository.AddAsync(publisher);
             await _publisherRepository.CommitChangesAsync();
-            await _events.Publish(new PublisherCreated(publisher.Id, DateTime.UtcNow));
+            await _messagePublisher.Publish(new PublisherCreated(publisher.Id, DateTime.UtcNow));
         }
 
         public async Task UpdatePublisher(UpdatePublisherRequest request)

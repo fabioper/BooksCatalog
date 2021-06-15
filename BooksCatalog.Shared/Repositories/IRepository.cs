@@ -9,7 +9,7 @@ namespace BooksCatalog.Shared.Repositories
         Task AddAsync(T entity);
         Task<IEnumerable<T>> GetAllAsync();
         Task<T> FindByIdAsync(int id);
-        Task<List<T>> GetBySpec(Specification<T> spec);
+        Task<List<T>> GetBy(Specification<T> spec);
         Task UpdateAsync(T entity);
         Task RemoveAsync(T entity);
         Task CommitChangesAsync();

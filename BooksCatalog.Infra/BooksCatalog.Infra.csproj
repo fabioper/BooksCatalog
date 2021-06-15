@@ -17,4 +17,8 @@
       <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.0-preview.3.21201.2" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Services\Contracts" />
+    </ItemGroup>
+
 </Project>

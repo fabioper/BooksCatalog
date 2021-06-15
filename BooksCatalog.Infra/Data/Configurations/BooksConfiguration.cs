@@ -1,3 +1,4 @@
+using BooksCatalog.Core;
 using BooksCatalog.Core.Books;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
