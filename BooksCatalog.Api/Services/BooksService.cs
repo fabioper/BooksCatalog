@@ -9,12 +9,10 @@ using BooksCatalog.Api.Services.Contracts;
 using BooksCatalog.Api.Services.Exceptions;
 using BooksCatalog.Api.Services.Extensions;
 using BooksCatalog.Api.Services.Specifications;
-using BooksCatalog.Domain;
 using BooksCatalog.Domain.Author;
 using BooksCatalog.Domain.Books;
 using BooksCatalog.Domain.Books.Events;
 using BooksCatalog.Domain.Genre;
-using BooksCatalog.Domain.Interfaces;
 using BooksCatalog.Domain.Interfaces.Messaging;
 using BooksCatalog.Domain.Interfaces.Repositories;
 using BooksCatalog.Domain.Publisher;
@@ -89,6 +87,7 @@ namespace BooksCatalog.Api.Services
             var updatedBook = _mapper.Map<Book>(request);
 
             await _bookRepository.UpdateAsync(updatedBook);
+            await _bookRepository.CommitChangesAsync();
         }
 
         public async Task DeleteBook(int bookId)
@@ -97,6 +96,8 @@ namespace BooksCatalog.Api.Services
             if (book is null) throw new BookNotFoundException();
 
             await _bookRepository.RemoveAsync(book);
+            await _bookRepository.CommitChangesAsync();
+            await _messagePublisher.Publish(new BookRemoved(book.Id));
         }
 
         public async Task<UploadImageResponse> UploadImage(UploadImageRequest request)

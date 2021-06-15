@@ -1,4 +1,6 @@
-﻿namespace BooksCatalog.Domain.Interfaces.Messaging
+﻿using System;
+
+namespace BooksCatalog.Domain.Interfaces.Messaging
 {
     public abstract record ApplicationEvent
     {
