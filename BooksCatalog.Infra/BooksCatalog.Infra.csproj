@@ -15,6 +15,7 @@
       <PackageReference Include="MassTransit" Version="7.2.0" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0-preview.3.21201.2" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.0-preview.3.21201.2" />
+      <PackageReference Include="RabbitMQ.Client" Version="6.2.1" />
     </ItemGroup>
 
     <ItemGroup>

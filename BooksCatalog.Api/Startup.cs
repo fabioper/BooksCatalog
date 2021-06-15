@@ -77,12 +77,12 @@ namespace BooksCatalog.Api
 
             #endregion
 
-            services.AddMassTransit(x =>
+            /*services.AddMassTransit(x =>
             {
                 x.AddBus(_ => Bus.Factory.CreateUsingRabbitMq(config =>
                     config.Host("localhost", RabbitMqHostConfig)));
             });
-            services.AddMassTransitHostedService();
+            services.AddMassTransitHostedService();*/
         }
 
         private static void RabbitMqHostConfig(IRabbitMqHostConfigurator host)
