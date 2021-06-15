@@ -35,16 +35,16 @@ namespace BooksCatalog.Infra.Data.Repositories
             return await _entitySet.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public Task<List<T>> GetBySpec(Specification<T> spec)
+        public Task<List<T>> GetBy(Specification<T> spec)
         {
             return _entitySet.AsNoTracking()
                 .Where(spec.ToExpression())
                 .ToListAsync();
         }
 
-        public Task UpdateAsync(T entity)
+        public async Task UpdateAsync(T entity)
         {
-            throw new NotImplementedException();
+            await Task.Run(() => _entitySet.Update(entity));
         }
 
         public async Task RemoveAsync(T entity)

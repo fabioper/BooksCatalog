@@ -8,9 +8,13 @@ using BooksCatalog.Api.Models.Responses;
 using BooksCatalog.Api.Services.Contracts;
 using BooksCatalog.Api.Services.Exceptions;
 using BooksCatalog.Api.Services.Extensions;
-using BooksCatalog.Core.Authors;
-using BooksCatalog.Core.Interfaces;
-using BooksCatalog.Infra.Services.Contracts;
+using BooksCatalog.Domain;
+using BooksCatalog.Domain.Author;
+using BooksCatalog.Domain.Author.Events;
+using BooksCatalog.Domain.Interfaces;
+using BooksCatalog.Domain.Interfaces.Messaging;
+using BooksCatalog.Domain.Interfaces.Repositories;
+using BooksCatalog.Infra.Services.Storage.Contracts;
 using BooksCatalog.Shared.Guards;
 
 namespace BooksCatalog.Api.Services
@@ -20,12 +24,15 @@ namespace BooksCatalog.Api.Services
         private readonly IAuthorRepository _authorRepository;
         private readonly IMapper _mapper;
         private readonly IStorageService _storageService;
+        private readonly IMessagePublisher _messagePublisher;
 
-        public AuthorsService(IAuthorRepository authorRepository, IMapper mapper, IStorageService storageService)
+        public AuthorsService(IAuthorRepository authorRepository,
+            IMapper mapper, IStorageService storageService, IMessagePublisher messagePublisher)
         {
             _authorRepository = authorRepository;
             _mapper = mapper;
             _storageService = storageService;
+            _messagePublisher = messagePublisher;
         }
 
         public async Task<IEnumerable<AuthorResponse>> GetAll()
@@ -48,6 +55,7 @@ namespace BooksCatalog.Api.Services
 
             await _authorRepository.AddAsync(author);
             await _authorRepository.CommitChangesAsync();
+            await _messagePublisher.Publish(new AuthorCreated(author.Id, DateTime.UtcNow));
         }
 
         public async Task Update(UpdateAuthorRequest request)

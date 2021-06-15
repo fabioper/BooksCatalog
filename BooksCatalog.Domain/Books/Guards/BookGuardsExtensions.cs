@@ -1,8 +1,8 @@
-﻿using BooksCatalog.Core.Books.Exceptions;
+﻿using BooksCatalog.Domain.Books.Exceptions;
 using BooksCatalog.Shared;
 using BooksCatalog.Shared.Guards;
 
-namespace BooksCatalog.Core.Books.Guards
+namespace BooksCatalog.Domain.Books.Guards
 {
     public static class BookGuardsExtensions
     {

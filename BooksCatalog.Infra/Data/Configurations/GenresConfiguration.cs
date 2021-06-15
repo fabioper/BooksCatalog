@@ -1,4 +1,5 @@
-﻿using BooksCatalog.Core.Genres;
+﻿using BooksCatalog.Domain;
+using BooksCatalog.Domain.Genre;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

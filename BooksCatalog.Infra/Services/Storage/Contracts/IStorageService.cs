@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace BooksCatalog.Infra.Services.Contracts
+namespace BooksCatalog.Infra.Services.Storage.Contracts
 {
     public interface IStorageService
     {

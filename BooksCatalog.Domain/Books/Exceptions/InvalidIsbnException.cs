@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BooksCatalog.Core.Books.Exceptions
+namespace BooksCatalog.Domain.Books.Exceptions
 {
     public class InvalidIsbnException : ArgumentException
     {

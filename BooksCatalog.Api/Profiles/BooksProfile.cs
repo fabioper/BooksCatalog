@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using BooksCatalog.Api.Models.Requests;
 using BooksCatalog.Api.Models.Responses;
-using BooksCatalog.Core.Authors;
-using BooksCatalog.Core.Books;
-using BooksCatalog.Core.Genres;
-using BooksCatalog.Core.Publishers;
+using BooksCatalog.Domain;
+using BooksCatalog.Domain.Books;
+using BooksCatalog.Domain.Genre;
+using BooksCatalog.Domain.Publisher;
 
 namespace BooksCatalog.Api.Profiles
 {

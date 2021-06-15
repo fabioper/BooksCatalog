@@ -2,7 +2,7 @@
 using System.IO;
 using BooksCatalog.Shared.Guards;
 
-namespace BooksCatalog.Infra.Services
+namespace BooksCatalog.Infra.Services.Storage.Extensions
 {
     public static class BlobStorageGuardExtensions
     {

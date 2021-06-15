@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -6,8 +7,12 @@ using BooksCatalog.Api.Models.Requests;
 using BooksCatalog.Api.Models.Responses;
 using BooksCatalog.Api.Services.Contracts;
 using BooksCatalog.Api.Services.Exceptions;
-using BooksCatalog.Core.Genres;
-using BooksCatalog.Core.Interfaces;
+using BooksCatalog.Domain;
+using BooksCatalog.Domain.Genre;
+using BooksCatalog.Domain.Genre.Events;
+using BooksCatalog.Domain.Interfaces;
+using BooksCatalog.Domain.Interfaces.Messaging;
+using BooksCatalog.Domain.Interfaces.Repositories;
 
 namespace BooksCatalog.Api.Services
 {
@@ -15,11 +20,13 @@ namespace BooksCatalog.Api.Services
     {
         private readonly IGenreRepository _genreRepository;
         private readonly IMapper _mapper;
+        private readonly IMessagePublisher _messagePublisher;
 
-        public GenresService(IGenreRepository genreRepository, IMapper mapper)
+        public GenresService(IGenreRepository genreRepository, IMapper mapper, IMessagePublisher messagePublisher)
         {
             _genreRepository = genreRepository;
             _mapper = mapper;
+            _messagePublisher = messagePublisher;
         }
 
         public async Task<IEnumerable<GenreResponse>> GetAll()
@@ -41,6 +48,7 @@ namespace BooksCatalog.Api.Services
 
             await _genreRepository.AddAsync(genre);
             await _genreRepository.CommitChangesAsync();
+            await _messagePublisher.Publish(new GenreCreated(genre.Id, DateTime.UtcNow));
         }
 
         public async Task UpdateGenre(UpdateGenreRequest request)

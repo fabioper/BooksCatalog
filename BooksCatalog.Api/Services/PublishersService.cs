@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -7,9 +8,13 @@ using BooksCatalog.Api.Models.Responses;
 using BooksCatalog.Api.Services.Contracts;
 using BooksCatalog.Api.Services.Exceptions;
 using BooksCatalog.Api.Services.Extensions;
-using BooksCatalog.Core.Interfaces;
-using BooksCatalog.Core.Publishers;
-using BooksCatalog.Infra.Services.Contracts;
+using BooksCatalog.Domain;
+using BooksCatalog.Domain.Interfaces;
+using BooksCatalog.Domain.Interfaces.Messaging;
+using BooksCatalog.Domain.Interfaces.Repositories;
+using BooksCatalog.Domain.Publisher;
+using BooksCatalog.Domain.Publisher.Events;
+using BooksCatalog.Infra.Services.Storage.Contracts;
 using BooksCatalog.Shared.Guards;
 using Microsoft.AspNetCore.Http;
 
@@ -20,12 +25,15 @@ namespace BooksCatalog.Api.Services
         private readonly IPublisherRepository _publisherRepository;
         private readonly IStorageService _storageService;
         private readonly IMapper _mapper;
+        private readonly IMessagePublisher _messagePublisher;
 
-        public PublishersService(IPublisherRepository publisherRepository, IMapper mapper, IStorageService storageService)
+        public PublishersService(IPublisherRepository publisherRepository,
+            IMapper mapper, IStorageService storageService, IMessagePublisher messagePublisher)
         {
             _publisherRepository = publisherRepository;
             _mapper = mapper;
             _storageService = storageService;
+            _messagePublisher = messagePublisher;
         }
 
         public async Task<IEnumerable<PublisherResponse>> GetAllPublishers()
@@ -48,6 +56,7 @@ namespace BooksCatalog.Api.Services
 
             await _publisherRepository.AddAsync(publisher);
             await _publisherRepository.CommitChangesAsync();
+            await _messagePublisher.Publish(new PublisherCreated(publisher.Id, DateTime.UtcNow));
         }
 
         public async Task UpdatePublisher(UpdatePublisherRequest request)

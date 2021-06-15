@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using BooksCatalog.Core.Books;
+using BooksCatalog.Domain.Books;
 using BooksCatalog.Shared;
 using BooksCatalog.Shared.Guards;
 
-namespace BooksCatalog.Core.Authors
+namespace BooksCatalog.Domain.Author
 {
     public class Author : Entity
     {

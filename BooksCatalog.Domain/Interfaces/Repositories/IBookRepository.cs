@@ -1,8 +1,7 @@
-﻿using BooksCatalog.Core.Books;
-using BooksCatalog.Shared;
+﻿using BooksCatalog.Domain.Books;
 using BooksCatalog.Shared.Repositories;
 
-namespace BooksCatalog.Core.Interfaces
+namespace BooksCatalog.Domain.Interfaces.Repositories
 {
     public interface IBookRepository : IRepository<Book>
     {
