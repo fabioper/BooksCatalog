@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31229.75
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooksCatalog.Infra", "BooksCatalog.Infra\BooksCatalog.Infra.csproj", "{5789AC3E-E3D3-4351-A265-6059D0575DEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooksCatalog.Core", "BooksCatalog.Core\BooksCatalog.Core.csproj", "{0F7647CB-6569-4782-B6FB-A478DE915D98}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooksCatalog.Domain", "BooksCatalog.Domain\BooksCatalog.Domain.csproj", "{0F7647CB-6569-4782-B6FB-A478DE915D98}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooksCatalog.Shared", "BooksCatalog.Shared\BooksCatalog.Shared.csproj", "{5AD1199E-061A-468C-974E-2F013EEC2600}"
 EndProject

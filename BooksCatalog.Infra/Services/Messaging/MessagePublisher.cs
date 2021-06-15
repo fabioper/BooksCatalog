@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using BooksCatalog.Core.Interfaces;
-using BooksCatalog.Core.Interfaces.Messaging;
+using BooksCatalog.Domain.Interfaces;
+using BooksCatalog.Domain.Interfaces.Messaging;
 using MassTransit;
 
 namespace BooksCatalog.Infra.Services.Messaging

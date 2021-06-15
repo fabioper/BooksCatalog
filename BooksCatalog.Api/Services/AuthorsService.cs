@@ -8,12 +8,12 @@ using BooksCatalog.Api.Models.Responses;
 using BooksCatalog.Api.Services.Contracts;
 using BooksCatalog.Api.Services.Exceptions;
 using BooksCatalog.Api.Services.Extensions;
-using BooksCatalog.Core;
-using BooksCatalog.Core.Author;
-using BooksCatalog.Core.Author.Events;
-using BooksCatalog.Core.Interfaces;
-using BooksCatalog.Core.Interfaces.Messaging;
-using BooksCatalog.Core.Interfaces.Repositories;
+using BooksCatalog.Domain;
+using BooksCatalog.Domain.Author;
+using BooksCatalog.Domain.Author.Events;
+using BooksCatalog.Domain.Interfaces;
+using BooksCatalog.Domain.Interfaces.Messaging;
+using BooksCatalog.Domain.Interfaces.Repositories;
 using BooksCatalog.Infra.Services.Storage.Contracts;
 using BooksCatalog.Shared.Guards;
 

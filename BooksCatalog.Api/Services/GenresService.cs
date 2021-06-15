@@ -7,12 +7,12 @@ using BooksCatalog.Api.Models.Requests;
 using BooksCatalog.Api.Models.Responses;
 using BooksCatalog.Api.Services.Contracts;
 using BooksCatalog.Api.Services.Exceptions;
-using BooksCatalog.Core;
-using BooksCatalog.Core.Genre;
-using BooksCatalog.Core.Genre.Events;
-using BooksCatalog.Core.Interfaces;
-using BooksCatalog.Core.Interfaces.Messaging;
-using BooksCatalog.Core.Interfaces.Repositories;
+using BooksCatalog.Domain;
+using BooksCatalog.Domain.Genre;
+using BooksCatalog.Domain.Genre.Events;
+using BooksCatalog.Domain.Interfaces;
+using BooksCatalog.Domain.Interfaces.Messaging;
+using BooksCatalog.Domain.Interfaces.Repositories;
 
 namespace BooksCatalog.Api.Services
 {

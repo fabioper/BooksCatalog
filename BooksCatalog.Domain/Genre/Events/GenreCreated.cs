@@ -1,7 +1,7 @@
 ﻿using System;
-using BooksCatalog.Core.Interfaces.Messaging;
+using BooksCatalog.Domain.Interfaces.Messaging;
 
-namespace BooksCatalog.Core.Genre.Events
+namespace BooksCatalog.Domain.Genre.Events
 {
     public record GenreCreated(int GenreId, DateTime CreatedAt) : ApplicationEvent
     {

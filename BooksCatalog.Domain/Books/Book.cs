@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using BooksCatalog.Shared;
 using BooksCatalog.Shared.Guards;
 
-namespace BooksCatalog.Core.Books
+namespace BooksCatalog.Domain.Books
 {
     public class Book : Entity
     {

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using BooksCatalog.Core.Books;
+using BooksCatalog.Domain.Books;
 using BooksCatalog.Shared;
 
-namespace BooksCatalog.Core.Genre
+namespace BooksCatalog.Domain.Genre
 {
     public class Genre : Entity
     {

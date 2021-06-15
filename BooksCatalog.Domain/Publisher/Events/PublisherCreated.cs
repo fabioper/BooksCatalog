@@ -1,7 +1,7 @@
 ﻿using System;
-using BooksCatalog.Core.Interfaces.Messaging;
+using BooksCatalog.Domain.Interfaces.Messaging;
 
-namespace BooksCatalog.Core.Publisher.Events
+namespace BooksCatalog.Domain.Publisher.Events
 {
     public record PublisherCreated(int PublisherId, DateTime CreatedAt) : ApplicationEvent
     {

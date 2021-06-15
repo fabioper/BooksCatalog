@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using BooksCatalog.Core.Books;
+using BooksCatalog.Domain.Books;
 using Microsoft.EntityFrameworkCore;
 
 namespace BooksCatalog.Infra.Data

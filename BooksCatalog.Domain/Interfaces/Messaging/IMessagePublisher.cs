@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace BooksCatalog.Core.Interfaces.Messaging
+namespace BooksCatalog.Domain.Interfaces.Messaging
 {
     public interface IMessagePublisher
     {
