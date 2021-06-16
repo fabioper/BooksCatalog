@@ -3,7 +3,6 @@ using System.IO;
 using System.Reflection;
 using BooksCatalog.Api.Services;
 using BooksCatalog.Api.Services.Contracts;
-using BooksCatalog.Domain.Interfaces;
 using BooksCatalog.Domain.Interfaces.Messaging;
 using BooksCatalog.Domain.Interfaces.Repositories;
 using BooksCatalog.Infra.Data;
@@ -11,8 +10,6 @@ using BooksCatalog.Infra.Data.Repositories;
 using BooksCatalog.Infra.Services.Messaging;
 using BooksCatalog.Infra.Services.Storage;
 using BooksCatalog.Infra.Services.Storage.Contracts;
-using MassTransit;
-using MassTransit.RabbitMqTransport;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -76,19 +73,6 @@ namespace BooksCatalog.Api
             services.AddScoped<IPublisherRepository, PublishersRepository>();
 
             #endregion
-
-            services.AddMassTransit(x =>
-            {
-                x.AddBus(_ => Bus.Factory.CreateUsingRabbitMq(config =>
-                    config.Host("localhost", RabbitMqHostConfig)));
-            });
-            services.AddMassTransitHostedService();
-        }
-
-        private static void RabbitMqHostConfig(IRabbitMqHostConfigurator host)
-        {
-            host.Username("guest");
-            host.Password("guest");
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
