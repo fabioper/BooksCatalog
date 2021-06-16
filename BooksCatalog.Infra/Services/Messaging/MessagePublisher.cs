@@ -19,7 +19,6 @@ namespace BooksCatalog.Infra.Services.Messaging
             var queue = message.QueueName();
             channel.QueueDeclare(queue, false, false, false, null);
 
-            
             var serializedMessage =  JsonConvert.SerializeObject(message);
             var body = Encoding.UTF8.GetBytes(serializedMessage);
             
