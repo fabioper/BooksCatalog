@@ -14,7 +14,7 @@ namespace BooksCatalog.Domain.Author
         public string Biography { get; set; }
         public DateTime BirthDate { get; set; }
 
-        public Author(string firstName, string lastName, string imageUri, DateTime birthDate)
+        public Author(string firstName, string lastName, string imageUri, DateTime birthDate, string biography)
         {
             Guard.Against.NullOrEmpty(firstName, nameof(firstName));
             Guard.Against.NullOrEmpty(lastName, nameof(lastName));
@@ -23,6 +23,7 @@ namespace BooksCatalog.Domain.Author
             LastName = lastName;
             ImageUri = imageUri;
             BirthDate = birthDate;
+            Biography = biography;
             Books = new List<Book>();
         }
 

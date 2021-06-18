@@ -6,6 +6,13 @@ namespace BooksCatalog.Domain.Publisher
 {
     public class Publisher : Entity
     {
+        public string Name { get; set; }
+        
+        public Publisher(string name)
+        {
+            Name = name;
+        }
+
         public ICollection<Book> Books { get; set; }
     }
 }
