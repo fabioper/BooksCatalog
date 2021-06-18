@@ -74,7 +74,7 @@ namespace BooksCatalog.Api.Services
             var book = new Book(request.Title, request.ReleaseDate, request.Description,
                 request.Isbn, authors, genres, publishers);
 
-            await _bookRepository.AddAsync(book);
+            await _bookRepository.UpdateAsync(book);
             await _bookRepository.CommitChangesAsync();
             await _messagePublisher.Publish(new BookCreated(book.Id, DateTime.UtcNow));
         }

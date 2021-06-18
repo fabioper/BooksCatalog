@@ -51,7 +51,8 @@ namespace BooksCatalog.Api.Services
 
         public async Task Add(AddAuthorRequest request)
         {
-            var author = new Author(request.FirstName, request.LastName, request.ImageUri, request.BirthDate);
+            var author = new Author(request.FirstName, request.LastName, request.ImageUri,
+                request.BirthDate, request.Biography);
 
             await _authorRepository.AddAsync(author);
             await _authorRepository.CommitChangesAsync();

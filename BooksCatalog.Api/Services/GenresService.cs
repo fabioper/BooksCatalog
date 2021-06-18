@@ -44,7 +44,7 @@ namespace BooksCatalog.Api.Services
 
         public async Task AddNewGenre(AddNewGenreRequest request)
         {
-            var genre = new Genre();
+            var genre = new Genre(request.Name);
 
             await _genreRepository.AddAsync(genre);
             await _genreRepository.CommitChangesAsync();

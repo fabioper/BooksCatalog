@@ -12,9 +12,11 @@ namespace BooksCatalog.Infra.Data.Configurations
             builder.ToTable("Publishers")
                 .HasKey(p => p.Id);
 
-            builder.HasIndex(p => p.Id);
+            builder.HasIndex(g => g.Id);
+            builder.HasIndex(g => g.Name);
 
-            builder.Property(p => p.Id);
+            builder.Property(g => g.Id);
+            builder.Property(g => g.Name);
 
             builder.HasMany(p => p.Books)
                 .WithMany(p => p.Publishers);

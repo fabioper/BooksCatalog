@@ -52,7 +52,7 @@ namespace BooksCatalog.Api.Services
 
         public async Task AddNewPublisher(AddNewPublisher request)
         {
-            var publisher = new Publisher();
+            var publisher = new Publisher(request.Name);
 
             await _publisherRepository.AddAsync(publisher);
             await _publisherRepository.CommitChangesAsync();

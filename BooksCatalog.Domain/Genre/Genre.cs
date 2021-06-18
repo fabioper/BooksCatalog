@@ -8,5 +8,14 @@ namespace BooksCatalog.Domain.Genre
     {
         public string Name { get; set; }
         public ICollection<Book> Books { get; set; }
+
+        public Genre(string name)
+        {
+            Name = name;
+        }
+
+        public Genre() // EF required
+        {
+        }
     }
 }
