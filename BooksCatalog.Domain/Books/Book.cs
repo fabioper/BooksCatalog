@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BooksCatalog.Domain.Books.Guards;
 using BooksCatalog.Shared;
 using BooksCatalog.Shared.Guards;
 
@@ -23,10 +24,10 @@ namespace BooksCatalog.Domain.Books
             Guard.Against.NullOrEmpty(title, nameof(title));
             Guard.Against.NullOrEmpty(description, nameof(description));
             Guard.Against.NullOrEmpty(isbn, nameof(isbn));
-            /*Guard.Against.NullOrEmpty(authors, nameof(authors));
+            Guard.Against.NullOrEmpty(authors, nameof(authors));
             Guard.Against.NullOrEmpty(genres, nameof(genres));
-            Guard.Against.NullOrEmpty(publishers, nameof(publishers));*/
-            /*Guard.Against.InvalidIsbn(isbn);*/
+            Guard.Against.NullOrEmpty(publishers, nameof(publishers));
+            Guard.Against.InvalidIsbn(isbn);
 
             Title = title;
             ReleaseDate = releaseDate;
