@@ -87,7 +87,13 @@ namespace BooksCatalog.Api
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "BooksCatalog API");
                 c.RoutePrefix = string.Empty;
             });
-            
+
+            app.UseCors(policy =>
+            {
+                policy.WithOrigins("http://localhost:4200")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            });
             app.UseRouting();
 
             app.UseEndpoints(endpoints => endpoints.MapControllers());
