@@ -22,5 +22,14 @@ namespace BooksCatalog.Infra.Data.Repositories
                 .Include(b => b.Publishers)
                 .ToListAsync();
         }
+
+        public new async Task<Book> FindByIdAsync(int id)
+        {
+            return await EntitySet.AsNoTracking()
+                .Include(b => b.Authors)
+                .Include(b => b.Genres)
+                .Include(b => b.Publishers)
+                .FirstOrDefaultAsync(b => b.Id == id);
+        }
     }
 }
