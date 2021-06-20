@@ -66,7 +66,7 @@ namespace BooksCatalog.Api.Controllers
             try
             {
                 await _publishersService.DeletePublisher(publisherId);
-                return NotFound();
+                return Ok();
             }
             catch (PublisherNotFoundException)
             {
