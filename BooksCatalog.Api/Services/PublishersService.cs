@@ -50,7 +50,7 @@ namespace BooksCatalog.Api.Services
             return _mapper.Map<PublisherResponse>(publisher);
         }
 
-        public async Task AddNewPublisher(AddNewPublisher request)
+        public async Task AddNewPublisher(AddNewPublisherRequest request)
         {
             var publisher = new Publisher(request.Name);
 
