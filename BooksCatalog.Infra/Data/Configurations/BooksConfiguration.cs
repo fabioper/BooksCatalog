@@ -13,10 +13,8 @@ namespace BooksCatalog.Infra.Data.Configurations
                 .HasKey(b => b.Id);
 
             builder.HasIndex(b => b.Id);
-            builder.HasIndex(b => b.Isbn).IsUnique();
             
             builder.Property(b => b.Description);
-            builder.Property(b => b.Isbn);
             builder.Property(b => b.Title);
             builder.Property(b => b.ReleaseDate);
             builder.Property(b => b.CoverUri);

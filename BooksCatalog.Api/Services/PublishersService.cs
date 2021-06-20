@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using BooksCatalog.Api.Models.Filters;
 using BooksCatalog.Api.Models.Requests;
 using BooksCatalog.Api.Models.Responses;
 using BooksCatalog.Api.Services.Contracts;
 using BooksCatalog.Api.Services.Exceptions;
 using BooksCatalog.Api.Services.Extensions;
-using BooksCatalog.Domain;
-using BooksCatalog.Domain.Interfaces;
 using BooksCatalog.Domain.Interfaces.Messaging;
 using BooksCatalog.Domain.Interfaces.Repositories;
-using BooksCatalog.Domain.Publisher;
-using BooksCatalog.Domain.Publisher.Events;
+using BooksCatalog.Domain.Publishers;
+using BooksCatalog.Domain.Publishers.Events;
 using BooksCatalog.Infra.Services.Storage.Contracts;
 using BooksCatalog.Shared.Guards;
 using Microsoft.AspNetCore.Http;
@@ -36,9 +35,12 @@ namespace BooksCatalog.Api.Services
             _messagePublisher = messagePublisher;
         }
 
-        public async Task<IEnumerable<PublisherResponse>> GetAllPublishers()
+        public async Task<IEnumerable<PublisherResponse>> GetAllPublishers(BaseFilter filter)
         {
-            var publishers = await _publisherRepository.GetAllAsync();
+            var publishers = string.IsNullOrEmpty(filter.Name)
+                ? await _publisherRepository.GetAllAsync()
+                : await _publisherRepository.GetByName(filter.Name);
+            
             return publishers.Select(x => _mapper.Map<PublisherResponse>(x));
         }
 

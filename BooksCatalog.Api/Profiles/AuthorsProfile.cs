@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BooksCatalog.Api.Models.Requests;
 using BooksCatalog.Api.Models.Responses;
-using BooksCatalog.Domain.Author;
+using BooksCatalog.Domain.Authors;
 
 namespace BooksCatalog.Api.Profiles
 {

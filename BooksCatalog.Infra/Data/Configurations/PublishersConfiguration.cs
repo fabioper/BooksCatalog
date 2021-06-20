@@ -1,5 +1,4 @@
-﻿using BooksCatalog.Domain;
-using BooksCatalog.Domain.Publisher;
+﻿using BooksCatalog.Domain.Publishers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -9,13 +9,13 @@ using BooksCatalog.Api.Services.Contracts;
 using BooksCatalog.Api.Services.Exceptions;
 using BooksCatalog.Api.Services.Extensions;
 using BooksCatalog.Api.Services.Specifications;
-using BooksCatalog.Domain.Author;
+using BooksCatalog.Domain.Authors;
 using BooksCatalog.Domain.Books;
 using BooksCatalog.Domain.Books.Events;
-using BooksCatalog.Domain.Genre;
+using BooksCatalog.Domain.Genres;
 using BooksCatalog.Domain.Interfaces.Messaging;
 using BooksCatalog.Domain.Interfaces.Repositories;
-using BooksCatalog.Domain.Publisher;
+using BooksCatalog.Domain.Publishers;
 using BooksCatalog.Infra.Services.Storage.Contracts;
 using BooksCatalog.Shared.Guards;
 
@@ -71,8 +71,13 @@ namespace BooksCatalog.Api.Services
             var genres = await _genreRepository.GetBy(new MultipleIdsSpec<Genre>(request.GenreIds));
             var publishers = await _publisherRepository.GetBy(new MultipleIdsSpec<Publisher>(request.PublisherIds));
 
-            var book = new Book(request.Title, request.ReleaseDate, request.Description,
-                request.Isbn, authors, genres, publishers);
+            var book = new Book(
+                request.Title,
+                request.ReleaseDate,
+                request.Description,
+                request.CoverUri, authors,
+                genres, publishers
+            );
 
             await _bookRepository.UpdateAsync(book);
             await _bookRepository.CommitChangesAsync();

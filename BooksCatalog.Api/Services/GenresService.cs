@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using BooksCatalog.Api.Models.Filters;
 using BooksCatalog.Api.Models.Requests;
 using BooksCatalog.Api.Models.Responses;
 using BooksCatalog.Api.Services.Contracts;
 using BooksCatalog.Api.Services.Exceptions;
-using BooksCatalog.Domain.Genre;
-using BooksCatalog.Domain.Genre.Events;
+using BooksCatalog.Domain.Genres;
+using BooksCatalog.Domain.Genres.Events;
 using BooksCatalog.Domain.Interfaces.Messaging;
 using BooksCatalog.Domain.Interfaces.Repositories;
 
@@ -27,9 +28,12 @@ namespace BooksCatalog.Api.Services
             _messagePublisher = messagePublisher;
         }
 
-        public async Task<IEnumerable<GenreResponse>> GetAll()
+        public async Task<IEnumerable<GenreResponse>> GetAll(BaseFilter baseFilter)
         {
-            var genres = await _genreRepository.GetAllAsync();
+            var genres = string.IsNullOrEmpty(baseFilter.Name)
+                ? await _genreRepository.GetAllAsync()
+                : await _genreRepository.GetByName(baseFilter.Name);
+            
             return genres.Select(genre => _mapper.Map<GenreResponse>(genre));
         }
 

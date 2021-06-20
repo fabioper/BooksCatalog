@@ -2,7 +2,7 @@
 using BooksCatalog.Domain.Books;
 using BooksCatalog.Shared;
 
-namespace BooksCatalog.Domain.Publisher
+namespace BooksCatalog.Domain.Publishers
 {
     public class Publisher : Entity
     {

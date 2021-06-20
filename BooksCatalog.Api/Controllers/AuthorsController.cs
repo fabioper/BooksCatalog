@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using BooksCatalog.Api.Models.Filters;
 using BooksCatalog.Api.Models.Requests;
 using BooksCatalog.Api.Services.Contracts;
 using BooksCatalog.Api.Services.Exceptions;
@@ -16,9 +17,10 @@ namespace BooksCatalog.Api.Controllers
             _authorsService = authorsService;
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] BaseFilter filter)
         {
-            var authors = await _authorsService.GetAll();
+            filter ??= new BaseFilter();
+            var authors = await _authorsService.GetAll(filter);
             return Ok(authors);
         }
 

@@ -1,8 +1,12 @@
-﻿using BooksCatalog.Shared.Repositories;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using BooksCatalog.Domain.Publishers;
+using BooksCatalog.Shared.Repositories;
 
 namespace BooksCatalog.Domain.Interfaces.Repositories
 {
-    public interface IPublisherRepository : IRepository<Publisher.Publisher>
+    public interface IPublisherRepository : IRepository<Publisher>
     {
+        Task<IEnumerable<Publisher>> GetByName(string name);
     }
 }

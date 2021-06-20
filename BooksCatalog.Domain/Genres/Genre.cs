@@ -2,7 +2,7 @@
 using BooksCatalog.Domain.Books;
 using BooksCatalog.Shared;
 
-namespace BooksCatalog.Domain.Genre
+namespace BooksCatalog.Domain.Genres
 {
     public class Genre : Entity
     {

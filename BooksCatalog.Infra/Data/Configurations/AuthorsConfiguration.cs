@@ -1,5 +1,4 @@
-﻿using BooksCatalog.Domain;
-using BooksCatalog.Domain.Author;
+﻿using BooksCatalog.Domain.Authors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -13,12 +12,10 @@ namespace BooksCatalog.Infra.Data.Configurations
                 .HasKey(a => a.Id);
 
             builder.HasIndex(a => a.Id);
-            builder.HasIndex(a => a.FirstName);
-            builder.HasIndex(a => a.LastName);
+            builder.HasIndex(a => a.Name);
 
             builder.Property(a => a.Id);
-            builder.Property(a => a.FirstName);
-            builder.Property(a => a.LastName);
+            builder.Property(a => a.Name);
             builder.Property(a => a.ImageUri);
             builder.Property(a => a.BirthDate);
             builder.Property(a => a.Biography);

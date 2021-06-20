@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using BooksCatalog.Api.Models.Filters;
 using BooksCatalog.Api.Models.Requests;
 using BooksCatalog.Api.Models.Responses;
 using BooksCatalog.Api.Services.Contracts;
 using BooksCatalog.Api.Services.Exceptions;
 using BooksCatalog.Api.Services.Extensions;
-using BooksCatalog.Domain;
-using BooksCatalog.Domain.Author;
-using BooksCatalog.Domain.Author.Events;
-using BooksCatalog.Domain.Interfaces;
+using BooksCatalog.Domain.Authors;
+using BooksCatalog.Domain.Authors.Events;
 using BooksCatalog.Domain.Interfaces.Messaging;
 using BooksCatalog.Domain.Interfaces.Repositories;
 using BooksCatalog.Infra.Services.Storage.Contracts;
 using BooksCatalog.Shared.Guards;
+using static System.String;
 
 namespace BooksCatalog.Api.Services
 {
@@ -35,9 +35,12 @@ namespace BooksCatalog.Api.Services
             _messagePublisher = messagePublisher;
         }
 
-        public async Task<IEnumerable<AuthorResponse>> GetAll()
+        public async Task<IEnumerable<AuthorResponse>> GetAll(BaseFilter filter)
         {
-            var authors = await _authorRepository.GetAllAsync();
+            var authors = IsNullOrEmpty(filter.Name)
+                ? await _authorRepository.GetAllAsync()
+                : await _authorRepository.GetByName(filter.Name);
+
             return authors.Select(author => _mapper.Map<AuthorResponse>(author));
         }
 
@@ -51,8 +54,7 @@ namespace BooksCatalog.Api.Services
 
         public async Task Add(AddAuthorRequest request)
         {
-            var author = new Author(request.FirstName, request.LastName, request.ImageUri,
-                request.BirthDate, request.Biography);
+            var author = new Author(request.Name, request.ImageUri, request.BirthDate, request.Biography);
 
             await _authorRepository.AddAsync(author);
             await _authorRepository.CommitChangesAsync();
@@ -62,12 +64,12 @@ namespace BooksCatalog.Api.Services
         public async Task Update(UpdateAuthorRequest request)
         {
             Guard.Against.NegativeOrZero(request.Id, nameof(request.Id));
-            
+
             var author = await _authorRepository.FindByIdAsync(request.Id);
             if (author is null) throw new AuthorNotFoundException();
 
             var updatedAuthor = _mapper.Map<Author>(request);
-            
+
             await _authorRepository.UpdateAsync(updatedAuthor);
             await _authorRepository.CommitChangesAsync();
         }
@@ -75,10 +77,10 @@ namespace BooksCatalog.Api.Services
         public async Task Remove(int authorId)
         {
             Guard.Against.NegativeOrZero(authorId, nameof(authorId));
-            
+
             var author = await _authorRepository.FindByIdAsync(authorId);
             if (author is null) throw new AuthorNotFoundException();
-            
+
             await _authorRepository.RemoveAsync(author);
             await _authorRepository.CommitChangesAsync();
         }
