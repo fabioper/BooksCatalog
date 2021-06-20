@@ -1,6 +1,6 @@
 ﻿namespace BooksCatalog.Api.Models.Requests
 {
-    public class AddNewPublisher
+    public class AddNewPublisherRequest
     {
         public string Name { get; set; }
     }
