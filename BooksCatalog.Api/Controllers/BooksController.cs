@@ -31,7 +31,7 @@ namespace BooksCatalog.Api.Controllers
             {
                 var book = await _booksService.GetBookById(bookId);
                 if (book is null) return NotFound();
-                return Ok();
+                return Ok(book);
             }
             catch (BookNotFoundException)
             {
