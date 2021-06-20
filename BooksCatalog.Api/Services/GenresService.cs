@@ -7,10 +7,8 @@ using BooksCatalog.Api.Models.Requests;
 using BooksCatalog.Api.Models.Responses;
 using BooksCatalog.Api.Services.Contracts;
 using BooksCatalog.Api.Services.Exceptions;
-using BooksCatalog.Domain;
 using BooksCatalog.Domain.Genre;
 using BooksCatalog.Domain.Genre.Events;
-using BooksCatalog.Domain.Interfaces;
 using BooksCatalog.Domain.Interfaces.Messaging;
 using BooksCatalog.Domain.Interfaces.Repositories;
 
@@ -56,7 +54,7 @@ namespace BooksCatalog.Api.Services
             var genre = await _genreRepository.FindByIdAsync(request.Id);
             if (genre is null) throw new GenreNotFoundException();
 
-            var updatedGenre = _mapper.Map<Genre>(genre);
+            var updatedGenre = _mapper.Map<Genre>(request);
             
             await _genreRepository.UpdateAsync(updatedGenre);
             await _genreRepository.CommitChangesAsync();
