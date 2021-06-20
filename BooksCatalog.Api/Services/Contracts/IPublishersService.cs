@@ -10,7 +10,7 @@ namespace BooksCatalog.Api.Services.Contracts
     {
         Task<IEnumerable<PublisherResponse>> GetAllPublishers();
         Task<PublisherResponse> GetPublisherById(int publisherId);
-        Task AddNewPublisher(AddNewPublisher request);
+        Task AddNewPublisher(AddNewPublisherRequest request);
         Task UpdatePublisher(UpdatePublisherRequest request);
 
         Task DeletePublisher(int publisherId);
