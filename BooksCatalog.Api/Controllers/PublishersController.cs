@@ -40,7 +40,7 @@ namespace BooksCatalog.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddNewPublisher([FromBody] AddNewPublisher request)
+        public async Task<IActionResult> AddNewPublisher([FromBody] AddNewPublisherRequest request)
         {
             await _publishersService.AddNewPublisher(request);
             return Ok();
