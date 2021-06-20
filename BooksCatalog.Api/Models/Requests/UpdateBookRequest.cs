@@ -13,5 +13,6 @@ namespace BooksCatalog.Api.Models.Requests
         public List<int> AuthorIds { get; set; }
         public List<int> GenreIds { get; set; }
         public List<int> PublisherIds { get; set; }
+        public string CoverUri { get; set; }
     }
 }
