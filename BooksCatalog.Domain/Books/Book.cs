@@ -8,15 +8,15 @@ namespace BooksCatalog.Domain.Books
 {
     public class Book : Entity
     {
-        public string Title { get; }
-        public DateTime ReleaseDate { get; }
-        public string Description { get; }
-        public string Isbn { get; }
+        public string Title { get; set; }
+        public DateTime ReleaseDate { get; set; }
+        public string Description { get; set; }
+        public string Isbn { get; set; }
         public string CoverUri { get; set; }
 
-        public ICollection<Author.Author> Authors { get; }
-        public ICollection<Genre.Genre> Genres { get; }
-        public ICollection<Publisher.Publisher> Publishers { get; }
+        public ICollection<Author.Author> Authors { get; set; }
+        public ICollection<Genre.Genre> Genres { get; set; }
+        public ICollection<Publisher.Publisher> Publishers { get; set; }
 
         public Book(string title, DateTime releaseDate, string description, string isbn, List<Author.Author> authors,
             List<Genre.Genre> genres, List<Publisher.Publisher> publishers)
