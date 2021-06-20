@@ -19,6 +19,7 @@ namespace BooksCatalog.Infra.Data.Configurations
             builder.Property(b => b.Isbn);
             builder.Property(b => b.Title);
             builder.Property(b => b.ReleaseDate);
+            builder.Property(b => b.CoverUri);
 
             builder.HasMany(b => b.Authors)
                 .WithMany(a => a.Books);
