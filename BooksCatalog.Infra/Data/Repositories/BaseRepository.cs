@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using BooksCatalog.Shared;
 using BooksCatalog.Shared.Repositories;
 using BooksCatalog.Shared.Specifications;
@@ -14,48 +12,47 @@ namespace BooksCatalog.Infra.Data.Repositories
         private readonly DbContext _context;
         protected readonly DbSet<T> EntitySet;
 
-        protected BaseRepository(BooksCatalogContext context)
+        protected BaseRepository(DbContext context)
         {
             _context = context;
             EntitySet = _context.Set<T>();
         }
 
-        public async Task AddAsync(T entity)
+        public void AddAsync(T entity)
         {
-            await EntitySet.AddAsync(entity);
+            EntitySet.Add(entity);
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public IEnumerable<T> GetAllAsync()
         {
-            return await EntitySet.AsNoTracking().ToListAsync();
+            return EntitySet.AsNoTracking().ToList();
         }
 
-        public async Task<T> FindByIdAsync(int id)
+        public T FindByIdAsync(int id)
         {
-            return await EntitySet.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            return EntitySet.AsNoTracking().FirstOrDefault(x => x.Id == id);
         }
 
-        public Task<List<T>> GetBy(Specification<T> spec)
+        public List<T> GetBy(Specification<T> spec)
         {
             return EntitySet.AsNoTracking()
                 .Where(spec.ToExpression())
-                .ToListAsync();
+                .ToList();
         }
 
-        public Task UpdateAsync(T entity)
+        public void UpdateAsync(T entity)
         {
             EntitySet.Update(entity);
-            return Task.CompletedTask;
         }
 
-        public async Task RemoveAsync(T entity)
+        public void RemoveAsync(T entity)
         {
-            await Task.Run(() => EntitySet.Remove(entity));
+            EntitySet.Remove(entity);
         }
 
-        public async Task CommitChangesAsync()
+        public void CommitChangesAsync()
         {
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
     }
 }

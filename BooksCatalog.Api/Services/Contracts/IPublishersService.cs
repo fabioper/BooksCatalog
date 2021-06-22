@@ -9,12 +9,12 @@ namespace BooksCatalog.Api.Services.Contracts
 {
     public interface IPublishersService
     {
-        Task<IEnumerable<PublisherResponse>> GetAllPublishers(BaseFilter filter);
-        Task<PublisherResponse> GetPublisherById(int publisherId);
+        IEnumerable<PublisherResponse> GetAllPublishers(BaseFilter filter);
+        PublisherResponse GetPublisherById(int publisherId);
         Task AddNewPublisher(AddNewPublisherRequest request);
-        Task UpdatePublisher(UpdatePublisherRequest request);
+        void UpdatePublisher(UpdatePublisherRequest request);
 
-        Task DeletePublisher(int publisherId);
+        void DeletePublisher(int publisherId);
         Task<UploadImageResponse> UploadImage(IFormFile file);
     }
 }

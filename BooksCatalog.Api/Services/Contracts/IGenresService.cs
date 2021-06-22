@@ -8,10 +8,10 @@ namespace BooksCatalog.Api.Services.Contracts
 {
     public interface IGenresService
     {
-        Task<IEnumerable<GenreResponse>> GetAll(BaseFilter baseFilter);
-        Task<GenreResponse> FindById(int genreId);
+        IEnumerable<GenreResponse> GetAll(BaseFilter baseFilter);
+        GenreResponse FindById(int genreId);
         Task AddNewGenre(AddNewGenreRequest request);
-        Task UpdateGenre(UpdateGenreRequest request);
-        Task RemoveGenre(int genreId);
+        void UpdateGenre(UpdateGenreRequest request);
+        void RemoveGenre(int genreId);
     }
 }

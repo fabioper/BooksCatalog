@@ -14,6 +14,7 @@ namespace BooksCatalog.Domain.Books
         public DateTime ReleaseDate { get; set; }
         public string Description { get; set; }
         public string CoverUri { get; set; }
+        public DateTime CreationDate { get; set; }
 
         public ICollection<Author> Authors { get; set; }
         public ICollection<Genre> Genres { get; set; }
@@ -35,10 +36,12 @@ namespace BooksCatalog.Domain.Books
             Authors = authors;
             Genres = genres;
             Publishers = publishers;
+            CreationDate = DateTime.UtcNow;
         }
 
-        public Book() // EF Core required
+        public Book(DateTime creationDate) // EF Core required
         {
+            CreationDate = creationDate;
         }
     }
 }

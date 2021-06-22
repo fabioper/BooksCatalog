@@ -35,18 +35,18 @@ namespace BooksCatalog.Api.Services
             _messagePublisher = messagePublisher;
         }
 
-        public async Task<IEnumerable<PublisherResponse>> GetAllPublishers(BaseFilter filter)
+        public IEnumerable<PublisherResponse> GetAllPublishers(BaseFilter filter)
         {
             var publishers = string.IsNullOrEmpty(filter.Name)
-                ? await _publisherRepository.GetAllAsync()
-                : await _publisherRepository.GetByName(filter.Name);
+                ? _publisherRepository.GetAllAsync()
+                : _publisherRepository.GetByName(filter.Name);
             
             return publishers.Select(x => _mapper.Map<PublisherResponse>(x));
         }
 
-        public async Task<PublisherResponse> GetPublisherById(int publisherId)
+        public PublisherResponse GetPublisherById(int publisherId)
         {
-            var publisher = await _publisherRepository.FindByIdAsync(publisherId);
+            var publisher = _publisherRepository.FindByIdAsync(publisherId);
             if (publisher is null) throw new PublisherNotFoundException();
 
             return _mapper.Map<PublisherResponse>(publisher);
@@ -56,33 +56,33 @@ namespace BooksCatalog.Api.Services
         {
             var publisher = new Publisher(request.Name);
 
-            await _publisherRepository.AddAsync(publisher);
-            await _publisherRepository.CommitChangesAsync();
+            _publisherRepository.AddAsync(publisher);
+            _publisherRepository.CommitChangesAsync();
             await _messagePublisher.Publish(new PublisherCreated(publisher.Id, DateTime.UtcNow));
         }
 
-        public async Task UpdatePublisher(UpdatePublisherRequest request)
+        public void UpdatePublisher(UpdatePublisherRequest request)
         {
             Guard.Against.NegativeOrZero(request.Id, nameof(request.Id));
 
             
-            var publisher = await _publisherRepository.FindByIdAsync(request.Id);
+            var publisher = _publisherRepository.FindByIdAsync(request.Id);
             if (publisher is null) throw new PublisherNotFoundException();
 
             var updatedPublisher = _mapper.Map<Publisher>(request);
-            await _publisherRepository.UpdateAsync(updatedPublisher);
-            await _publisherRepository.CommitChangesAsync();
+            _publisherRepository.UpdateAsync(updatedPublisher);
+            _publisherRepository.CommitChangesAsync();
         }
 
-        public async Task DeletePublisher(int publisherId)
+        public void DeletePublisher(int publisherId)
         {
             Guard.Against.NegativeOrZero(publisherId, nameof(publisherId));
             
-            var publisher = await _publisherRepository.FindByIdAsync(publisherId);
+            var publisher = _publisherRepository.FindByIdAsync(publisherId);
             if (publisher is null) throw new PublisherNotFoundException();
 
-            await _publisherRepository.RemoveAsync(publisher);
-            await _publisherRepository.CommitChangesAsync();
+            _publisherRepository.RemoveAsync(publisher);
+            _publisherRepository.CommitChangesAsync();
         }
 
         public async Task<UploadImageResponse> UploadImage(IFormFile file)

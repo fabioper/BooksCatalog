@@ -7,6 +7,6 @@ namespace BooksCatalog.Domain.Interfaces.Repositories
 {
     public interface IPublisherRepository : IRepository<Publisher>
     {
-        Task<IEnumerable<Publisher>> GetByName(string name);
+        IEnumerable<Publisher> GetByName(string name);
     }
 }

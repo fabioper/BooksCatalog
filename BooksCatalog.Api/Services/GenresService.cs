@@ -28,18 +28,18 @@ namespace BooksCatalog.Api.Services
             _messagePublisher = messagePublisher;
         }
 
-        public async Task<IEnumerable<GenreResponse>> GetAll(BaseFilter baseFilter)
+        public IEnumerable<GenreResponse> GetAll(BaseFilter baseFilter)
         {
             var genres = string.IsNullOrEmpty(baseFilter.Name)
-                ? await _genreRepository.GetAllAsync()
-                : await _genreRepository.GetByName(baseFilter.Name);
+                ? _genreRepository.GetAllAsync()
+                : _genreRepository.GetByName(baseFilter.Name);
             
             return genres.Select(genre => _mapper.Map<GenreResponse>(genre));
         }
 
-        public async Task<GenreResponse> FindById(int genreId)
+        public GenreResponse FindById(int genreId)
         {
-            var genre = await _genreRepository.FindByIdAsync(genreId);
+            var genre = _genreRepository.FindByIdAsync(genreId);
             if (genre is null) throw new GenreNotFoundException();
             return _mapper.Map<GenreResponse>(genre);
         }
@@ -48,29 +48,29 @@ namespace BooksCatalog.Api.Services
         {
             var genre = new Genre(request.Name);
 
-            await _genreRepository.AddAsync(genre);
-            await _genreRepository.CommitChangesAsync();
+            _genreRepository.AddAsync(genre);
+            _genreRepository.CommitChangesAsync();
             await _messagePublisher.Publish(new GenreCreated(genre.Id, DateTime.UtcNow));
         }
 
-        public async Task UpdateGenre(UpdateGenreRequest request)
+        public void UpdateGenre(UpdateGenreRequest request)
         {
-            var genre = await _genreRepository.FindByIdAsync(request.Id);
+            var genre = _genreRepository.FindByIdAsync(request.Id);
             if (genre is null) throw new GenreNotFoundException();
 
             var updatedGenre = _mapper.Map<Genre>(request);
             
-            await _genreRepository.UpdateAsync(updatedGenre);
-            await _genreRepository.CommitChangesAsync();
+            _genreRepository.UpdateAsync(updatedGenre);
+            _genreRepository.CommitChangesAsync();
         }
 
-        public async Task RemoveGenre(int genreId)
+        public void RemoveGenre(int genreId)
         {
-            var genre = await _genreRepository.FindByIdAsync(genreId);
+            var genre = _genreRepository.FindByIdAsync(genreId);
             if (genre is null) throw new GenreNotFoundException();
 
-            await _genreRepository.RemoveAsync(genre);
-            await _genreRepository.CommitChangesAsync();
+            _genreRepository.RemoveAsync(genre);
+            _genreRepository.CommitChangesAsync();
         }
     }
 }

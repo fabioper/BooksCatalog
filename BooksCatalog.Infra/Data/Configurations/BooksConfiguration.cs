@@ -9,8 +9,7 @@ namespace BooksCatalog.Infra.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Book> builder)
         {
-            builder.ToTable("Books")
-                .HasKey(b => b.Id);
+            builder.ToTable("Books").HasKey(b => b.Id);
 
             builder.HasIndex(b => b.Id);
             
@@ -18,6 +17,7 @@ namespace BooksCatalog.Infra.Data.Configurations
             builder.Property(b => b.Title);
             builder.Property(b => b.ReleaseDate);
             builder.Property(b => b.CoverUri);
+            builder.Property(b => b.CreationDate);
 
             builder.HasMany(b => b.Authors)
                 .WithMany(a => a.Books);
