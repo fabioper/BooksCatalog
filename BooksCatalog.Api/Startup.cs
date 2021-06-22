@@ -90,7 +90,7 @@ namespace BooksCatalog.Api
         {
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
-            app.UseHttpsRedirection();
+            /*app.UseHttpsRedirection();*/
             
             app.UseSwagger();
             app.UseSwaggerUI(c =>
