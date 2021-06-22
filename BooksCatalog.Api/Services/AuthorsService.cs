@@ -35,18 +35,18 @@ namespace BooksCatalog.Api.Services
             _messagePublisher = messagePublisher;
         }
 
-        public async Task<IEnumerable<AuthorResponse>> GetAll(BaseFilter filter)
+        public IEnumerable<AuthorResponse> GetAll(BaseFilter filter)
         {
             var authors = IsNullOrEmpty(filter.Name)
-                ? await _authorRepository.GetAllAsync()
-                : await _authorRepository.GetByName(filter.Name);
+                ? _authorRepository.GetAllAsync()
+                : _authorRepository.GetByName(filter.Name);
 
             return authors.Select(author => _mapper.Map<AuthorResponse>(author));
         }
 
-        public async Task<AuthorResponse> FindById(int authorId)
+        public AuthorResponse FindById(int authorId)
         {
-            var author = await _authorRepository.FindByIdAsync(authorId);
+            var author = _authorRepository.FindByIdAsync(authorId);
             if (author is null)
                 throw new AuthorNotFoundException();
             return _mapper.Map<AuthorResponse>(author);
@@ -56,33 +56,33 @@ namespace BooksCatalog.Api.Services
         {
             var author = new Author(request.Name, request.ImageUri, request.BirthDate, request.Biography);
 
-            await _authorRepository.AddAsync(author);
-            await _authorRepository.CommitChangesAsync();
+            _authorRepository.AddAsync(author);
+            _authorRepository.CommitChangesAsync();
             await _messagePublisher.Publish(new AuthorCreated(author.Id, DateTime.UtcNow));
         }
 
-        public async Task Update(UpdateAuthorRequest request)
+        public void Update(UpdateAuthorRequest request)
         {
             Guard.Against.NegativeOrZero(request.Id, nameof(request.Id));
 
-            var author = await _authorRepository.FindByIdAsync(request.Id);
+            var author = _authorRepository.FindByIdAsync(request.Id);
             if (author is null) throw new AuthorNotFoundException();
 
             var updatedAuthor = _mapper.Map<Author>(request);
 
-            await _authorRepository.UpdateAsync(updatedAuthor);
-            await _authorRepository.CommitChangesAsync();
+            _authorRepository.UpdateAsync(updatedAuthor);
+            _authorRepository.CommitChangesAsync();
         }
 
-        public async Task Remove(int authorId)
+        public void Remove(int authorId)
         {
             Guard.Against.NegativeOrZero(authorId, nameof(authorId));
 
-            var author = await _authorRepository.FindByIdAsync(authorId);
+            var author = _authorRepository.FindByIdAsync(authorId);
             if (author is null) throw new AuthorNotFoundException();
 
-            await _authorRepository.RemoveAsync(author);
-            await _authorRepository.CommitChangesAsync();
+            _authorRepository.RemoveAsync(author);
+            _authorRepository.CommitChangesAsync();
         }
 
         public async Task<UploadImageResponse> UploadImage(UploadImageRequest request)

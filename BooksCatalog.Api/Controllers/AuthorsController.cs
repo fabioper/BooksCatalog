@@ -3,12 +3,14 @@ using BooksCatalog.Api.Models.Filters;
 using BooksCatalog.Api.Models.Requests;
 using BooksCatalog.Api.Services.Contracts;
 using BooksCatalog.Api.Services.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BooksCatalog.Api.Controllers
 {
     [ApiController]
     [Route("/api/authors")]
+    [Authorize]
     public class AuthorsController : ControllerBase
     {
         private readonly IAuthorsService _authorsService;
@@ -17,19 +19,21 @@ namespace BooksCatalog.Api.Controllers
             _authorsService = authorsService;
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] BaseFilter filter)
+        [AllowAnonymous]
+        public IActionResult GetAll([FromQuery] BaseFilter filter)
         {
             filter ??= new BaseFilter();
-            var authors = await _authorsService.GetAll(filter);
+            var authors = _authorsService.GetAll(filter);
             return Ok(authors);
         }
 
         [HttpGet("{authorId:int}")]
-        public async Task<IActionResult> GetAuthorById(int authorId)
+        [AllowAnonymous]
+        public IActionResult GetAuthorById(int authorId)
         {
             try
             {
-                var author = await _authorsService.FindById(authorId);
+                var author = _authorsService.FindById(authorId);
                 return Ok(author);
             }
             catch (AuthorNotFoundException)
@@ -39,11 +43,11 @@ namespace BooksCatalog.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddAuthor([FromBody] AddAuthorRequest request)
+        public IActionResult AddAuthor([FromBody] AddAuthorRequest request)
         {
             try
             {
-                await _authorsService.Add(request);
+                _authorsService.Add(request);
                 return Ok();
             }
             catch (AuthorNotFoundException)
@@ -53,11 +57,11 @@ namespace BooksCatalog.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateAuthor([FromBody] UpdateAuthorRequest request)
+        public IActionResult UpdateAuthor([FromBody] UpdateAuthorRequest request)
         {
             try
             {
-                await _authorsService.Update(request);
+                _authorsService.Update(request);
                 return Ok();
             }
             catch (AuthorNotFoundException)
@@ -67,11 +71,11 @@ namespace BooksCatalog.Api.Controllers
         }
 
         [HttpDelete("{authorId:int}")]
-        public async Task<IActionResult> RemoveAuthor(int authorId)
+        public IActionResult RemoveAuthor(int authorId)
         {
             try 
             {
-                await _authorsService.Remove(authorId);
+                _authorsService.Remove(authorId);
                 return Ok();
             }
             catch (AuthorNotFoundException)
@@ -81,9 +85,9 @@ namespace BooksCatalog.Api.Controllers
         }
 
         [HttpPost("upload-image")]
-        public async Task<IActionResult> UploadAuthorImage([FromForm] UploadImageRequest request)
+        public IActionResult UploadAuthorImage([FromForm] UploadImageRequest request)
         {
-            var response = await _authorsService.UploadImage(request);
+            var response = _authorsService.UploadImage(request);
             return Ok(response);
         }
     }

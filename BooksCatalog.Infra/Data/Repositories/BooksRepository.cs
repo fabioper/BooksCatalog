@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BooksCatalog.Domain;
 using BooksCatalog.Domain.Books;
@@ -14,22 +15,23 @@ namespace BooksCatalog.Infra.Data.Repositories
         {
         }
 
-        public new async Task<IEnumerable<Book>> GetAllAsync()
+        public new IEnumerable<Book> GetAllAsync()
         {
-            return await EntitySet.AsNoTracking()
+            return EntitySet.AsNoTracking()
                 .Include(b => b.Authors)
                 .Include(b => b.Genres)
                 .Include(b => b.Publishers)
-                .ToListAsync();
+                .OrderByDescending(x => x.CreationDate)
+                .ToList();
         }
 
-        public new async Task<Book> FindByIdAsync(int id)
+        public new Book FindByIdAsync(int id)
         {
-            return await EntitySet.AsNoTracking()
+            return EntitySet.AsNoTracking()
                 .Include(b => b.Authors)
                 .Include(b => b.Genres)
                 .Include(b => b.Publishers)
-                .FirstOrDefaultAsync(b => b.Id == id);
+                .FirstOrDefault(b => b.Id == id);
         }
     }
 }

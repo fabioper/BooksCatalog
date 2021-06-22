@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 namespace BooksCatalog.Api
@@ -37,6 +38,16 @@ namespace BooksCatalog.Api
                 options.UseNpgsql(_configuration.GetConnectionString("DbConnection")));
             
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+            services.AddAuthentication("Bearer")
+                .AddJwtBearer("Bearer", options =>
+                {
+                    options.Authority = "https://localhost:15450";
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateAudience = false
+                    };
+                });
             
             services.AddSwaggerGen(c =>
             {
@@ -95,6 +106,9 @@ namespace BooksCatalog.Api
                     .AllowAnyMethod();
             });
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints => endpoints.MapControllers());
         }

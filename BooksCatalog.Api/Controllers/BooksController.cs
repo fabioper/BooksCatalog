@@ -2,12 +2,14 @@
 using BooksCatalog.Api.Models.Requests;
 using BooksCatalog.Api.Services.Contracts;
 using BooksCatalog.Api.Services.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BooksCatalog.Api.Controllers
 {
     [ApiController]
     [Route("api/books")]
+    [Authorize]
     public class BooksController : ControllerBase
     {
         private readonly IBooksService _booksService;
@@ -18,19 +20,20 @@ namespace BooksCatalog.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetBooks()
+        [AllowAnonymous]
+        public IActionResult GetBooks()
         {
-            var books = await _booksService.GetBooks();
+            var books = _booksService.GetBooks();
             return Ok(books);
         }
 
         [HttpGet("{bookId:int}")]
-        public async Task<IActionResult> GetBook([FromRoute] int bookId)
+        [AllowAnonymous]
+        public IActionResult GetBook([FromRoute] int bookId)
         {
             try
             {
-                var book = await _booksService.GetBookById(bookId);
-                if (book is null) return NotFound();
+                var book = _booksService.GetBookById(bookId);
                 return Ok(book);
             }
             catch (BookNotFoundException)
@@ -47,11 +50,11 @@ namespace BooksCatalog.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateBook([FromBody] UpdateBookRequest request)
+        public ActionResult UpdateBook([FromBody] UpdateBookRequest request)
         {
             try
             {
-                await _booksService.UpdateBook(request);
+                _booksService.UpdateBook(request);
                 return Ok();
             }
             catch (BookNotFoundException)

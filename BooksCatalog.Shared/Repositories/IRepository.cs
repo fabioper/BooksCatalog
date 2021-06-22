@@ -1,17 +1,16 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using BooksCatalog.Shared.Specifications;
 
 namespace BooksCatalog.Shared.Repositories
 {
     public interface IRepository<T> where T : Entity
     {
-        Task AddAsync(T entity);
-        Task<IEnumerable<T>> GetAllAsync();
-        Task<T> FindByIdAsync(int id);
-        Task<List<T>> GetBy(Specification<T> spec);
-        Task UpdateAsync(T entity);
-        Task RemoveAsync(T entity);
-        Task CommitChangesAsync();
+        void AddAsync(T entity);
+        IEnumerable<T> GetAllAsync();
+        T FindByIdAsync(int id);
+        List<T> GetBy(Specification<T> spec);
+        void UpdateAsync(T entity);
+        void RemoveAsync(T entity);
+        void CommitChangesAsync();
     }
 }

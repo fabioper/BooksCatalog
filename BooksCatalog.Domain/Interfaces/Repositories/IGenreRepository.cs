@@ -7,6 +7,6 @@ namespace BooksCatalog.Domain.Interfaces.Repositories
 {
     public interface IGenreRepository : IRepository<Genre>
     {
-        Task<IEnumerable<Genre>> GetByName(string name);
+        IEnumerable<Genre> GetByName(string name);
     }
 }

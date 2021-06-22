@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using BooksCatalog.Domain.Interfaces.Repositories;
 using BooksCatalog.Domain.Publishers;
 using Microsoft.EntityFrameworkCore;
@@ -13,11 +12,11 @@ namespace BooksCatalog.Infra.Data.Repositories
         {
         }
 
-        public async Task<IEnumerable<Publisher>> GetByName(string name)
+        public IEnumerable<Publisher> GetByName(string name)
         {
-            return await EntitySet.AsNoTracking()
+            return EntitySet.AsNoTracking()
                 .Where(x => x.Name.ToUpper().Contains(name.ToUpper()))
-                .ToListAsync();
+                .ToList();
         }
     }
 }

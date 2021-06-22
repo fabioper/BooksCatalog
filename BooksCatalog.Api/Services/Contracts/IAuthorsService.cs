@@ -8,11 +8,11 @@ namespace BooksCatalog.Api.Services.Contracts
 {
     public interface IAuthorsService
     {
-        Task<IEnumerable<AuthorResponse>> GetAll(BaseFilter filter);
-        Task<AuthorResponse> FindById(int authorId);
+        IEnumerable<AuthorResponse> GetAll(BaseFilter filter);
+        AuthorResponse FindById(int authorId);
         Task Add(AddAuthorRequest request);
-        Task Update(UpdateAuthorRequest request);
-        Task Remove(int authorId);
+        void Update(UpdateAuthorRequest request);
+        void Remove(int authorId);
         Task<UploadImageResponse> UploadImage(UploadImageRequest request);
     }
 }

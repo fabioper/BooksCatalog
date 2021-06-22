@@ -48,15 +48,15 @@ namespace BooksCatalog.Api.Services
             _messagePublisher = messagePublisher;
         }
 
-        public async Task<IEnumerable<BookResponse>> GetBooks()
+        public IEnumerable<BookResponse> GetBooks()
         {
-            var books = await _bookRepository.GetAllAsync();
+            var books = _bookRepository.GetAllAsync();
             return books.Select(b => _mapper.Map<BookResponse>(b));
         }
 
-        public async Task<BookResponse> GetBookById(int bookId)
+        public BookResponse GetBookById(int bookId)
         {
-            var book = await _bookRepository.FindByIdAsync(bookId);
+            var book = _bookRepository.FindByIdAsync(bookId);
             if (book is null) throw new BookNotFoundException();
             return _mapper.Map<BookResponse>(book);
         }
@@ -67,41 +67,43 @@ namespace BooksCatalog.Api.Services
             Guard.Against.NullOrEmpty(request.GenreIds, nameof(request.GenreIds));
             Guard.Against.NullOrEmpty(request.PublisherIds, nameof(request.PublisherIds));
 
-            var authors = await _authorRepository.GetBy(new MultipleIdsSpec<Author>(request.AuthorIds));
-            var genres = await _genreRepository.GetBy(new MultipleIdsSpec<Genre>(request.GenreIds));
-            var publishers = await _publisherRepository.GetBy(new MultipleIdsSpec<Publisher>(request.PublisherIds));
+            var authors = _authorRepository.GetBy(new MultipleIdsSpec<Author>(request.AuthorIds));
+            var genres = _genreRepository.GetBy(new MultipleIdsSpec<Genre>(request.GenreIds));
+            var publishers = _publisherRepository.GetBy(new MultipleIdsSpec<Publisher>(request.PublisherIds));
 
             var book = new Book(
                 request.Title,
                 request.ReleaseDate,
                 request.Description,
-                request.CoverUri, authors,
-                genres, publishers
+                request.CoverUri,
+                authors,
+                genres,
+                publishers
             );
 
-            await _bookRepository.UpdateAsync(book);
-            await _bookRepository.CommitChangesAsync();
+            _bookRepository.UpdateAsync(book);
+            _bookRepository.CommitChangesAsync();
             await _messagePublisher.Publish(new BookCreated(book.Id, DateTime.UtcNow));
         }
 
-        public async Task UpdateBook(UpdateBookRequest request)
+        public void UpdateBook(UpdateBookRequest request)
         {
-            var book = await _bookRepository.FindByIdAsync(request.Id);
+            var book = _bookRepository.FindByIdAsync(request.Id);
             if (book is null) throw new BookNotFoundException();
 
             var updatedBook = _mapper.Map<Book>(request);
 
-            await _bookRepository.UpdateAsync(updatedBook);
-            await _bookRepository.CommitChangesAsync();
+            _bookRepository.UpdateAsync(updatedBook);
+            _bookRepository.CommitChangesAsync();
         }
 
         public async Task DeleteBook(int bookId)
         {
-            var book = await _bookRepository.FindByIdAsync(bookId);
+            var book = _bookRepository.FindByIdAsync(bookId);
             if (book is null) throw new BookNotFoundException();
 
-            await _bookRepository.RemoveAsync(book);
-            await _bookRepository.CommitChangesAsync();
+            _bookRepository.RemoveAsync(book);
+            _bookRepository.CommitChangesAsync();
             await _messagePublisher.Publish(new BookRemoved(book.Id));
         }
 
