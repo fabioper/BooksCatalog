@@ -14,5 +14,9 @@ namespace BooksCatalog.Domain.Publishers
         }
 
         public ICollection<Book> Books { get; set; }
+
+        public Publisher()
+        {
+        }
     }
 }
