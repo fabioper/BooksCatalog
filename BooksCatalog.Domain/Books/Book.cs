@@ -39,9 +39,8 @@ namespace BooksCatalog.Domain.Books
             CreationDate = DateTime.UtcNow;
         }
 
-        public Book(DateTime creationDate) // EF Core required
+        public Book() // EF Core required
         {
-            CreationDate = creationDate;
         }
     }
 }

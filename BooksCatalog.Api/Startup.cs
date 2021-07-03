@@ -39,7 +39,7 @@ namespace BooksCatalog.Api
             
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-            services.AddAuthentication("Bearer")
+            /*services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>
                 {
                     options.Authority = "https://localhost:15450";
@@ -47,7 +47,7 @@ namespace BooksCatalog.Api
                     {
                         ValidateAudience = false
                     };
-                });
+                });*/
             
             services.AddSwaggerGen(c =>
             {
